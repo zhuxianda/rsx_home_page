@@ -82,11 +82,13 @@ def header(active):
     def navlink(title, path):
         attr = ' aria-current="page"' if active == path else ''
         return f'<a href="{path}"{attr}>{title}</a>'
-    links = "".join(navlink(*entry) for entry in NAV)
+    links = "".join(navlink(*entry) for entry in NAV) + navlink("合作洽谈", "business.html")
     return f'''<a class="skip" href="#main">跳至主要内容</a><header class="site-header"><div class="wrap header-inner">
     {brand()}<nav class="desktop-nav" aria-label="主导航">{links}</nav>
-    <div class="nav-tools">{btn("合作洽谈", "business.html", "chat", "header-cta")}
-    <details class="mobile-nav"><summary aria-label="主导航菜单">{icon("menu")}</summary><nav aria-label="移动端导航">{links}{navlink("合作洽谈","business.html")}</nav></details></div></div></header>'''
+    <div class="nav-tools"><a class="oem-hotline" href="{CONTACT_TEL}" aria-label="OEM 业务联系，拨打{CONTACT_NAME}的电话 {CONTACT_DISPLAY}">
+    <span class="hotline-copy"><span class="hotline-label">OEM 业务联系 · <b>{CONTACT_NAME}</b></span><strong class="hotline-number">{CONTACT_DISPLAY}</strong></span>
+    <span class="hotline-action" aria-hidden="true">{icon("phone")}<span>拨打电话</span></span></a>
+    <details class="mobile-nav"><summary aria-label="主导航菜单">{icon("menu")}</summary><nav aria-label="移动端导航">{links}</nav></details></div></div></header>'''
 
 
 def footer():
