@@ -21,6 +21,12 @@ class Product:
     material: str = ""
     barcode: str = ""
     note: str = ""
+    barcode_label: str = "图册条码"
+    standard: str = ""
+    shelf_life: str = ""
+
+    def branded_name(self, separator=""):
+        return self.name if self.name.startswith(self.brand) else self.brand + separator + self.name
 
 
 records = json.loads(Path(__file__).with_name("catalogue.json").read_text(encoding="utf-8"))

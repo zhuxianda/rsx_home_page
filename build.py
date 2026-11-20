@@ -216,7 +216,7 @@ def product_card(p):
     channel_label = " · OEM 定制" if p.channel == "OEM 与定制" else ""
     return f'''<a class="product-card" href="product-{p.slug}.html"
     data-search="{escape(search_terms, quote=True)}" data-channel="{escape(p.channel, quote=True)}">
-    <div class="product-art {p.family}">{photosrc(p.slug,p.brand+p.name+"包装")}</div>
+    <div class="product-art {p.family}">{photosrc(p.slug,p.branded_name()+"包装")}</div>
     <div class="product-meta"><div class="card-brand"><small>{escape(p.brand)}{channel_label}</small>{item}</div>
     <h3>{title}</h3><p>{subtitle}</p></div></a>'''
 
@@ -257,16 +257,17 @@ def detail(p):
         partner_link = f'<a href="oem.html#{anchor}" class="text-link">查看合作品牌</a>'
     rows = [('所属业务', p.channel), ('品牌 / 系列', p.brand), ('合作项目', p.client),
             ('产品货号', p.item), ('尺寸 / 尺码', p.size), ('包装规格', p.contents),
-            ('装箱规格', p.carton), ('材质', p.material), ('图册条码', p.barcode)]
+            ('装箱规格', p.carton), ('材质', p.material), ('保质期', p.shelf_life),
+            ('执行标准', p.standard), (p.barcode_label, p.barcode)]
     specs = ''.join(f'<div><dt>{key}</dt><dd>{escape(value)}</dd></div>' for key,value in rows if value)
     lead = f'<p class="lead">{escape(p.description)}</p>' if p.description else ''
     note = f'<p class="source-note">{escape(p.note)}</p>' if p.note else ''
     html = f'''<div class="wrap">{breadcrumbs(("产品中心","products.html"),(family,"products-"+p.family+".html"),(escape(p.name),None))}
-    <section class="detail-grid"><div class="detail-art {p.family}">{photosrc(p.slug,p.brand+p.name+"包装",lazy=False)}</div>
+    <section class="detail-grid"><div class="detail-art {p.family}">{photosrc(p.slug,p.branded_name()+"包装",lazy=False)}</div>
     <div>{label(FAMILIES[p.family][1].upper())}<p class="product-brand">{escape(p.brand)}</p><h1>{escape(p.name)}</h1>{lead}
     <dl class="specs">{specs}</dl>{note}<div class="detail-references">{partner_link}<a class="source-page text-link" href="{profile_url(p.page)}">{icon("book")} 查看图册第 {p.page} 页</a></div>
     <div class="actions">{btn("洽谈 OEM 定制","business.html","chat")}{btn("查看同系列","products-"+p.family+".html",None,"outline")}</div></div></section></div>'''
-    write("product-"+p.slug+".html",p.brand+" · "+p.name,p.description or f"{p.brand}{p.name}的产品包装与规格，见公司图册第 {p.page} 页。","products.html",html)
+    write("product-"+p.slug+".html",p.branded_name(" · "),p.description or f"{p.branded_name()}的产品包装与规格，见公司图册第 {p.page} 页。","products.html",html)
 
 
 def profile_url(page):

@@ -96,14 +96,17 @@
     "page": 20,
     "channel": "自有品牌",
     "brand": "家必备",
-    "name": "卫生湿巾（湿厕纸40片）",
-    "item": "J-0052",
-    "size": "200 × 180 mm",
-    "contents": "片数待确认",
+    "name": "家必备牌湿厕纸",
+    "item": "J-0366",
+    "size": "200 × 150 mm",
+    "contents": "40 片 / 包",
     "carton": "30 包 / 箱",
-    "barcode": "6976947140656",
+    "barcode": "6976947140366",
+    "barcode_label": "包装条码",
+    "standard": "GB/T 27728.1-2024",
+    "shelf_life": "两年",
     "family": "wet",
-    "note": "图册品名和包装标注 40 片，规格栏为 5 片。"
+    "description": "限用日期及生产批号见包装喷码。"
   },
   {
     "slug": "p20-2",
