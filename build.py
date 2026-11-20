@@ -191,9 +191,9 @@ def manufacturing():
     )
     html=f'''<div class="wrap">{breadcrumbs(("制造实力",None))}<section class="feature-hero manufacturing-hero"><div>{label("MANUFACTURING")}<h1>制造实力</h1><p class="lead">位于成都大邑工业园区的生产基地，集湿巾、棉柔巾自动化生产与实验室检测于一体。</p></div>
     <figure class="manufacturing-gallery"><div class="process-scenes">{gallery}</div><figcaption>工艺场景示意 · AI 生成</figcaption></figure></section>{stats()}</div>
-    <section class="wrap section"><div class="section-heading"><div>{label("INSIDE THE FACTORY")}<h2>生产与检测</h2></div></div>
-    <div class="process-grid"><article>{photosrc("line-detail","棉柔巾包装设备与操作人员")}<div><h3>自动化生产</h3><p>6 条湿巾生产线、2 条棉柔巾生产线，覆盖单片、多片及 80 片婴儿湿巾等包装规格。</p></div></article>
-    <article>{photosrc("laboratory","如是欣实验室内的检测人员")}<div><h3>厂内实验室</h3><p>配备实验操作空间与培养设备，支持卫生用品生产过程中的质量管理。</p></div></article></div></section>
+    <section class="wrap section" id="production-and-testing"><div class="section-heading"><div>{label("INSIDE THE FACTORY")}<h2>生产与检测</h2></div><small class="process-image-note">配图为 AI 场景示意</small></div>
+    <div class="process-grid"><article>{photosrc("automatic-wipe-folding","折叠成叠的湿巾沿自动化输送带排列前行")}<div><h3>自动化生产</h3><p>6 条湿巾生产线、2 条棉柔巾生产线，覆盖单片、多片及 80 片婴儿湿巾等包装规格。</p></div></article>
+    <article>{photosrc("lab-wipe-microscopy","实验人员使用显微镜观察白色巾布样品")}<div><h3>厂内实验室</h3><p>配备实验操作空间与培养设备，支持卫生用品生产过程中的质量管理。</p></div></article></div></section>
     <section class="tinted"><div class="wrap section">{label("QUALITY MANAGEMENT")}<h2>企业资质</h2>
     <p class="intro-text">2023 年取得消毒产品生产企业卫生许可证，2024 年通过 ISO 9001:2015 质量管理体系认证，认证范围为卫生用品（纸巾、湿巾）的生产。</p>
     <div class="certs">{cert_html}</div></div></section>{banner()}'''
