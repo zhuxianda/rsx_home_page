@@ -1,0 +1,27 @@
+{
+	https_port 18443
+	auto_https disable_redirects
+	servers {
+		protocols h1 h2
+	}
+}
+
+http:// {
+	@site host rsx.rushixinbio.com
+	redir @site https://rsx.rushixinbio.com{uri} 308
+	respond 404
+}
+
+rsx.rushixinbio.com {
+	bind 127.0.0.1
+	tls {
+		issuer acme {
+			dir https://acme-v02.api.letsencrypt.org/directory
+			disable_tlsalpn_challenge
+		}
+	}
+	root * /srv/rsx-site/current
+	encode gzip
+	try_files {path} {path}.html
+	file_server
+}

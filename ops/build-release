@@ -1,0 +1,24 @@
+#!/bin/bash
+set -euo pipefail
+umask 022
+
+# The launcher holds the deployment lock while updating the checkout and building.
+base=/srv/rsx-site
+cd "$base/repo"
+commit=$(git rev-parse HEAD)
+release="$base/releases/$commit"
+stage=$(mktemp -d "$base/.build.XXXXXXXX")
+trap 'rm -rf -- "$stage"' EXIT
+
+if [[ ! -d "$release" ]]; then
+    git archive "$commit" | tar -x -C "$stage"
+    python3 "$stage/build.py"
+    for file in index.html products.html oem.html business.html assets/rushixin-profile.pdf; do
+        test -s "$stage/dist/$file"
+    done
+    mv "$stage/dist" "$release"
+fi
+
+ln -s "$release" "$stage/current"
+mv -Tf "$stage/current" "$base/current"
+printf 'Published %s\n' "$commit"

@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+# Only the pull account executes repository code. The public server reads current/.
+if [ "$(id -un)" != rsx-web ]; then
+    exec runuser -u rsx-web -- /usr/local/bin/rsx-deploy
+fi
+cd /srv/rsx-site/repo
+exec 9>/srv/rsx-site/.deploy.lock
+flock -x 9
+export GIT_TERMINAL_PROMPT=0
+git pull --ff-only origin main
+exec /bin/bash ops/build-release
