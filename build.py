@@ -168,7 +168,7 @@ def home():
     </div></div></section>{partner_strip()}
     <section class="factory-strip" id="production-base"><div class="wrap"><div class="split home-works"><figure class="base-overview">
     <img src="assets/dayi-campus-overview.webp" srcset="assets/dayi-campus-overview-660.webp 660w, assets/dayi-campus-overview.webp 1200w" sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1400px) 43vw, 600px" width="1200" height="800" loading="lazy" decoding="async" alt="成都大邑生产基地鸟瞰示意，三排蓝顶厂房沿装卸场地排列，办公楼位于前侧">
-    <figcaption>厂区布局示意</figcaption></figure><div class="split-copy">
+    </figure><div class="split-copy">
     {label("MANUFACTURING BASE")}<h2>成都大邑生产基地</h2><p>6 条湿巾自动生产线与 2 条棉柔巾自动生产线，承接单片湿巾、多片湿巾及棉柔巾生产。纸巾与湿巾生产已通过 ISO 9001 质量管理体系认证。</p>
     <div class="actions factory-actions">{btn("查看生产能力与资质","manufacturing.html",None,"outline")}<a class="text-link" href="about.html#operations">了解经营投入</a></div></div></div>{stats()}</div></section>
     <section class="wrap range-links"><div><h2>产品与规格</h2><p>查看定制产品、自有品牌及商用纸品的详细规格。</p></div><nav aria-label="产品系列">{''.join(f'<a href="products-{key}.html">{data[0]}</a>' for key,data in FAMILIES.items())}<a href="products.html">全部产品</a></nav></section>{banner()}'''
