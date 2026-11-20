@@ -109,19 +109,6 @@
     "description": "限用日期及生产批号见包装喷码。"
   },
   {
-    "slug": "p20-2",
-    "page": 20,
-    "channel": "自有品牌",
-    "brand": "家必备",
-    "name": "卫生湿巾（湿厕纸5片）",
-    "item": "J-0656",
-    "size": "200 × 180 mm",
-    "contents": "5 片 / 包",
-    "carton": "240 包 / 箱",
-    "barcode": "6976947140656",
-    "family": "wet"
-  },
-  {
     "slug": "p21-1",
     "page": 21,
     "channel": "自有品牌",
@@ -579,19 +566,6 @@
     "contents": "1 片 / 包",
     "carton": "350 包 / 箱",
     "barcode": "6976947141103",
-    "family": "wet"
-  },
-  {
-    "slug": "p37-1",
-    "page": 37,
-    "channel": "自有品牌",
-    "brand": "片片亲",
-    "name": "卫生湿巾（湿厕纸）",
-    "item": "J-0885",
-    "size": "200 × 180 mm",
-    "contents": "5 片 / 包",
-    "carton": "240 包 / 箱",
-    "barcode": "6976947140656",
     "family": "wet"
   },
   {
