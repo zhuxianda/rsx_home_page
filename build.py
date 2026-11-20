@@ -28,7 +28,10 @@ PARTNERS = {
     "汇鑫源·休闲庄": ("huixinyuan", "汇鑫源·休闲庄"),
     "食锦荟": ("shijinhui", "食锦荟"),
 }
-LOGO_PARTNERS = ("自由点", "维邦", "柔贝佳", "阳阳纸业", "桔子姑娘", "洁柔")
+# Public captions follow the artwork. Product pages retain the printed catalogue names.
+PARTNER_CAPTIONS = {"雅思": "雅诗纸业 · 鸥露", "汇鑫源·休闲庄": "汇鑫苑·休闲庄"}
+MARK_NAMES = {"阳阳纸业": "开心朵朵", "雅思": "鸥露", "百惠": "柔康莱",
+              "美乐美妆连锁": "谜库", "万华大药房": "万华大药房"}
 
 
 ICONS = {
@@ -125,14 +128,28 @@ def banner():
     {btn("电话 "+CONTACT_DISPLAY,CONTACT_TEL,"phone","on-dark")}</div></section>'''
 
 
+def partner_wall(linked=False):
+    tiles = []
+    # Retain category anchors in older links while showing only brand identities.
+    old_anchors = {"美乐美妆连锁": "retail-work", "汇鑫源·休闲庄": "hospitality-work"}
+    for key, (anchor, name) in PARTNERS.items():
+        caption = PARTNER_CAPTIONS.get(key, name)
+        mark = MARK_NAMES.get(key, caption)
+        alt = "" if mark == caption else mark + "标识"
+        caption_id = f' id="{old_anchors[key]}"' if not linked and key in old_anchors else ""
+        tile = f'<img src="assets/brand-{anchor}.webp" alt="{alt}" loading="lazy"><span{caption_id}>{caption}</span>'
+        if linked:
+            tiles.append(f'<li><a class="partner-mark" href="oem.html#{anchor}">{tile}</a></li>')
+        else:
+            tiles.append(f'<li id="{anchor}"><div class="partner-mark">{tile}</div></li>')
+    group_id = "" if linked else ' id="brand-work"'
+    return f'<ul class="cooperation-marks"{group_id}>{"".join(tiles)}</ul>'
+
+
 def partner_strip():
-    marks = []
-    for key in LOGO_PARTNERS:
-        anchor, name = PARTNERS[key]
-        marks.append(f'<a class="partner-mark" href="oem.html#{anchor}" aria-label="合作品牌：{name}"><img src="assets/brand-{anchor}.webp" alt="{name}"></a>')
     return f'''<section class="partner-section"><div class="wrap"><div class="partner-heading">
-    <h2>合作品牌</h2><a class="text-link" href="oem.html#portfolio">更多合作伙伴</a></div>
-    <div class="partner-marks">{"".join(marks)}</div></div></section>'''
+    <h2>合作品牌与客户</h2><a class="text-link" href="oem.html">了解 OEM 服务</a></div>
+    {partner_wall(linked=True)}</div></section>'''
 
 
 def home():
@@ -150,17 +167,6 @@ def home():
 
 
 def oem():
-    logos = []
-    names = []
-    # Preserve links to the original directory sections.
-    group_anchors = {"美乐美妆连锁": "retail-work", "汇鑫源·休闲庄": "hospitality-work"}
-    for key, (anchor, name) in PARTNERS.items():
-        if key in LOGO_PARTNERS:
-            logos.append(f'<li id="{anchor}"><img src="assets/brand-{anchor}.webp" alt="{name}" loading="lazy"></li>')
-        else:
-            group_id = f' id="{group_anchors[key]}"' if key in group_anchors else ""
-            names.append(f'<li id="{anchor}"><span{group_id}>{name}</span></li>')
-
     html = f'''<section class="partnership-hero" aria-labelledby="oem-title">
     <div class="wrap partnership-inner"><div class="partnership-copy">
     <p class="partnership-location">{icon("loc")} 四川 · 成都大邑</p>
@@ -176,8 +182,7 @@ def oem():
     </dl></div>
     <section class="wrap partner-gallery" id="portfolio" aria-labelledby="partner-title">
     <h2 id="partner-title">合作品牌与客户</h2>
-    <ul class="partner-logos" id="brand-work">{"".join(logos)}</ul>
-    <ul class="partner-names">{"".join(names)}</ul>
+    {partner_wall()}
     </section>
     <section class="oem-services"><div class="wrap service-layout"><div class="service-photo">{photosrc("automatic-wipe-folding","自动化输送带上整齐排列的折叠巾片")}</div>
     <div class="service-copy"><h2>OEM 定制能力</h2><dl>
