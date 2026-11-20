@@ -29,6 +29,7 @@ FAMILIES = {
     "wet": ("湿巾系列", "Wet wipes", "卫生护理、婴儿手口与家居清洁。", "baby"),
     "dry": ("棉柔巾系列", "Cotton soft wipes", "洗脸柔巾、抽取式与卷装棉柔巾。", "dry-facial"),
     "paper": ("生活用纸系列", "Tissue paper", "家庭用纸与商业空间纸品。", "kitchen-roll"),
+    "care": ("清洁护理系列", "Home & personal care", "家居清洁与个人护理用品。", "p47-1"),
 }
 NAV = [("首页", "index.html"), ("产品中心", "products.html"), ("制造实力", "manufacturing.html"), ("关于如是欣", "about.html")]
 
@@ -121,38 +122,59 @@ def home():
 
 
 def product_card(p):
-    return f'''<a class="product-card" href="product-{p.slug}.html"><div class="product-art {p.family}">{photosrc(p.slug,p.brand+p.name+"包装")}</div>
-    <div class="product-meta"><small>{p.brand}</small><h3>{p.name}</h3><p>{p.size} <span>·</span> {p.contents}</p></div></a>'''
+    title = escape(p.name)
+    search_terms = " ".join((p.brand, p.name, p.item, p.barcode, p.client, p.channel, p.contents, p.size))
+    subtitle = " · ".join(escape(value) for value in (p.size, p.contents) if value)
+    item = f'<span class="item-code">{escape(p.item)}</span>' if p.item else ""
+    return f'''<a class="product-card" href="product-{p.slug}.html"
+    data-search="{escape(search_terms, quote=True)}" data-channel="{escape(p.channel, quote=True)}">
+    <div class="product-art {p.family}">{photosrc(p.slug,p.brand+p.name+"包装")}</div>
+    <div class="product-meta"><div class="card-brand"><small>{escape(p.brand)}</small>{item}</div>
+    <h3>{title}</h3><p>{subtitle}</p></div></a>'''
 
 
 def products(key=None):
     family = FAMILIES[key][0] if key else '全部产品'
-    tabs = [(None,"全部产品")] + [(k,v[0]) for k,v in FAMILIES.items()]
-    def tab(k,n):
+    tabs = [(None, "全部产品")] + [(k, v[0]) for k, v in FAMILIES.items()]
+    def tab(k, n):
         path = f"products-{k}.html" if k else "products.html"
         attr = ' aria-current="page"' if k == key else ''
         return f'<a href="{path}"{attr}>{n}</a>'
-    links = ''.join(tab(k,n) for k,n in tabs)
+    links = ''.join(tab(k, n) for k, n in tabs)
     subset = [p for p in PRODUCTS if not key or p.family == key]
+    channels = sorted({p.channel for p in subset}, key=("自有品牌", "其他品牌", "OEM 与定制", "商用纸品").index)
+    options = ''.join(f'<option>{channel}</option>' for channel in channels)
     cards = ''.join(product_card(p) for p in subset)
     html = f'''<div class="page-intro"><div class="wrap">{breadcrumbs(("产品中心",None))}{label("PRODUCT CATALOGUE")}
-    <h1>产品中心</h1><p>收录家必备、片片亲、晓宝的代表产品及商用纸品，可按系列查看包装与规格。</p></div></div>
+    <h1>产品中心</h1><p>浏览自有品牌、OEM 定制及商用纸品。产品按图册顺序排列，可查看每款的包装、规格和图册原页。</p></div></div>
     <section class="wrap catalogue"><div class="catalogue-tools"><nav class="filters" aria-label="产品系列">{links}</nav>
     <a class="text-link" href="{DOC}" download>{icon("download")} 下载完整图册</a></div>
-    <h2 class="sr-only">{family}</h2><div class="product-grid">{cards}</div></section>'''
+    <h2 class="sr-only">{family}</h2>
+    <div class="catalogue-filter" hidden><label class="search-field"><span class="sr-only">在当前系列搜索产品</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+    <input id="product-query" type="search" placeholder="搜索品牌、品名、货号或条码"></label>
+    <select id="product-channel" aria-label="产品业务类型"><option value="">全部业务类型</option>{options}</select></div>
+    <p class="result-count" role="status"><span id="visible-count">{len(subset)}</span> 个产品及包装规格</p>
+    <div class="product-grid">{cards}</div><div class="empty-results" hidden><h3>没有匹配的产品</h3>
+    <p>可以换个关键词，或清除条件后浏览当前系列。</p><button class="text-link" type="button">清除筛选</button></div></section>'''
     filename = f"products-{key}.html" if key else "products.html"
     write(filename,"产品中心" if not key else family,f"{family}包装、规格及装箱信息。","products.html",html)
 
 
 def detail(p):
-    family=FAMILIES[p.family][0]
-    rows = [('品牌 / 系列',p.brand),('产品货号',p.item),('单张尺寸',p.size),('包装规格',p.contents),('装箱规格',p.carton)]
-    specs=''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k,v in rows if v)
-    html = f'''<div class="wrap">{breadcrumbs(("产品中心","products.html"),(family,"products-"+p.family+".html"),(p.name,None))}
+    family = FAMILIES[p.family][0]
+    rows = [('所属业务', p.channel), ('品牌 / 系列', p.brand), ('合作项目', p.client),
+            ('产品货号', p.item), ('尺寸 / 尺码', p.size), ('包装规格', p.contents),
+            ('装箱规格', p.carton), ('材质', p.material), ('图册条码', p.barcode)]
+    specs = ''.join(f'<div><dt>{key}</dt><dd>{escape(value)}</dd></div>' for key,value in rows if value)
+    lead = f'<p class="lead">{escape(p.description)}</p>' if p.description else ''
+    note = f'<p class="source-note">{escape(p.note)}</p>' if p.note else ''
+    html = f'''<div class="wrap">{breadcrumbs(("产品中心","products.html"),(family,"products-"+p.family+".html"),(escape(p.name),None))}
     <section class="detail-grid"><div class="detail-art {p.family}">{photosrc(p.slug,p.brand+p.name+"包装",lazy=False)}</div>
-    <div>{label(FAMILIES[p.family][1].upper())}<p class="product-brand">{p.brand}</p><h1>{p.name}</h1><p class="lead">{p.description}</p>
-    <dl class="specs">{specs}</dl><div class="actions">{btn("商务合作","business.html","chat")}{btn("查看同系列","products-"+p.family+".html",None,"outline")}</div></div></section></div>'''
-    write("product-"+p.slug+".html",p.brand+" · "+p.name,p.description,"products.html",html)
+    <div>{label(FAMILIES[p.family][1].upper())}<p class="product-brand">{escape(p.brand)}</p><h1>{escape(p.name)}</h1>{lead}
+    <dl class="specs">{specs}</dl>{note}<a class="source-page text-link" href="{DOC}#page={p.page}">{icon("book")} 查看图册第 {p.page} 页</a>
+    <div class="actions">{btn("商务合作","business.html","chat")}{btn("查看同系列","products-"+p.family+".html",None,"outline")}</div></div></section></div>'''
+    write("product-"+p.slug+".html",p.brand+" · "+p.name,p.description or f"{p.brand}{p.name}的产品包装与规格，见公司图册第 {p.page} 页。","products.html",html)
 
 
 def manufacturing():
@@ -184,7 +206,7 @@ def business():
     cases=[("oem-wipes","品牌 OEM","维邦卫生湿巾","180 × 180 mm，60 片装，55 g 平纹巾布。"),("oem-pharmacy","零售渠道定制","万华大药房定制湿厕纸","原生木浆材质，提供 40 片家庭装与 8 片便携装。"),("oem-dining","餐饮定制","餐厅独立装湿毛巾","250 × 250 mm 单片包装，按餐饮场景定制外袋。")]
     cards=''.join(f'<article class="case-card"><div class="case-image">{photosrc(slug,name)}</div><div><small>{kind}</small><h3>{name}</h3><p>{desc}</p></div></article>' for slug,kind,name,desc in cases)
     html=f'''<div class="page-intro"><div class="wrap">{breadcrumbs(("商务合作",None))}{label("OEM PARTNERSHIPS")}<h1>商务合作</h1><p>提供品牌 OEM 代工、零售渠道定制与商用纸品生产服务。</p></div></div>
-    <section class="wrap section"><div class="section-heading"><div>{label("SELECTED PROJECTS")}<h2>定制案例</h2></div></div><div class="case-grid">{cards}</div></section>
+    <section class="wrap section"><div class="section-heading"><div>{label("SELECTED PROJECTS")}<h2>定制案例</h2></div><a class="text-link" href="products.html?channel=OEM+%E4%B8%8E%E5%AE%9A%E5%88%B6">查看全部定制产品</a></div><div class="case-grid">{cards}</div></section>
     <section class="contact-area"><div class="wrap contact-grid"><div>{label("COMPANY ADDRESS")}<h2>公司地址</h2><p>{COMPANY}</p><address>{icon("loc")}<span id="address">{ADDRESS}</span></address>
     <div class="actions">{btn("在高德地图查看",MAP,"loc","outline")}<button class="text-link js-copy" type="button" hidden>{icon("copy")}<span>复制地址</span></button></div><p class="sr-only" id="copy-status" role="status"></p></div>
     <div class="download-card">{icon("book")}<h3>公司与产品图册</h3><p>浏览自有品牌、产品货号、装箱规格及更多定制案例。</p><a class="text-link" href="{DOC}" download>{icon("download")} 下载 PDF 图册 <small>75 页</small></a></div></div></section>'''
