@@ -180,8 +180,17 @@ def detail(p):
 def manufacturing():
     certs=[("license","营业执照"),("iso","质量管理体系认证证书"),("permit","消毒产品生产企业卫生许可证")]
     cert_html=''.join(f'<figure class="certificate"><a href="assets/{slug}.webp" aria-label="查看{name}大图">{photosrc(slug,name)}</a><figcaption>{name}</figcaption></figure>' for slug,name in certs)
-    html=f'''<div class="wrap">{breadcrumbs(("制造实力",None))}<section class="feature-hero"><div>{label("MANUFACTURING")}<h1>制造实力</h1><p class="lead">位于成都大邑工业园区的生产基地，集湿巾、棉柔巾自动化生产与实验室检测于一体。</p></div>
-    {photosrc("line","工厂内的湿巾自动生产线","feature-photo",False)}</section>{stats()}</div>
+    scenes = [
+        ("process-unwinding", "产线放卷", "多组无纺布卷沿导辊送入生产设备"),
+        ("process-fabric", "巾面纹理", "棉柔巾的纤维与珍珠纹在导辊上展开"),
+        ("process-inspection", "厚度检测", "戴手套的技术人员使用测厚仪检查巾布样品"),
+    ]
+    gallery = ''.join(
+        f'<div class="process-scene">{photosrc(slug, alt, lazy=False)}<span>{title}</span></div>'
+        for slug, title, alt in scenes
+    )
+    html=f'''<div class="wrap">{breadcrumbs(("制造实力",None))}<section class="feature-hero manufacturing-hero"><div>{label("MANUFACTURING")}<h1>制造实力</h1><p class="lead">位于成都大邑工业园区的生产基地，集湿巾、棉柔巾自动化生产与实验室检测于一体。</p></div>
+    <figure class="manufacturing-gallery"><div class="process-scenes">{gallery}</div><figcaption>工艺场景示意 · AI 生成</figcaption></figure></section>{stats()}</div>
     <section class="wrap section"><div class="section-heading"><div>{label("INSIDE THE FACTORY")}<h2>生产与检测</h2></div></div>
     <div class="process-grid"><article>{photosrc("line-detail","棉柔巾包装设备与操作人员")}<div><h3>自动化生产</h3><p>6 条湿巾生产线、2 条棉柔巾生产线，覆盖单片、多片及 80 片婴儿湿巾等包装规格。</p></div></article>
     <article>{photosrc("laboratory","如是欣实验室内的检测人员")}<div><h3>厂内实验室</h3><p>配备实验操作空间与培养设备，支持卫生用品生产过程中的质量管理。</p></div></article></div></section>
