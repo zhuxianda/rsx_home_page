@@ -12,28 +12,24 @@ DOC = "assets/rushixin-profile.pdf"
 CONTACT_NAME = "苏宏"
 CONTACT_DISPLAY = "136 7908 6363"
 CONTACT_TEL = "tel:" + CONTACT_DISPLAY.replace(" ", "")
-OEM_PRODUCTS = [p for p in PRODUCTS if p.channel == "OEM 与定制"]
-# Project identities follow the OEM and custom-project pages of the company catalogue.
-PROJECTS = {
-    "自由点": ("freemore", "自由点", "品牌代工", "湿巾与乳霜纸赠品"),
-    "维邦": ("vip-paper", "维邦纸业", "品牌代工", "湿巾与洗脸柔巾"),
-    "柔贝佳": ("roubeijia", "柔贝佳", "品牌代工", "洗脸柔巾、湿巾"),
-    "阳阳纸业": ("happy-flowers", "阳阳纸业 · 开心朵朵", "品牌代工", "手口湿巾、柔巾"),
-    "桔子姑娘": ("juziguniang", "桔子姑娘", "品牌代工", "手口及卫生湿巾"),
-    "洁柔": ("c-and-s", "洁柔", "品牌代工", "便携水润柔肤湿巾"),
-    "厮磨工坊": ("simo", "厮磨工坊", "品牌代工", "湿厕纸、湿巾与洗脸柔巾"),
-    "雅思": ("oulu", "雅思 · 欧露", "品牌代工", "原生木浆湿厕纸"),
-    "百惠": ("baihui", "百惠 · 柔康莱", "品牌代工", "厨房清洁与卫生湿巾"),
-    "美乐美妆连锁": ("meile", "美乐美妆连锁 · 谜库", "渠道定制", "洗脸柔巾与厨房湿巾"),
-    "万华大药房": ("wanhua", "万华大药房 · 卿易舒", "渠道定制", "湿厕纸、柔巾与生活用纸"),
-    "汇鑫源·休闲庄": ("huixinyuan", "汇鑫源·休闲庄", "餐饮定制", "单片独立包装湿毛巾"),
-    "食锦荟": ("shijinhui", "食锦荟", "餐饮定制", "单片独立包装湿毛巾"),
+# Keep these anchors stable for links from the existing product catalogue.
+PARTNERS = {
+    "自由点": ("freemore", "自由点"),
+    "维邦": ("vip-paper", "维邦纸业"),
+    "柔贝佳": ("roubeijia", "柔贝佳"),
+    "阳阳纸业": ("happy-flowers", "阳阳纸业 · 开心朵朵"),
+    "桔子姑娘": ("juziguniang", "桔子姑娘"),
+    "洁柔": ("c-and-s", "洁柔"),
+    "厮磨工坊": ("simo", "厮磨工坊"),
+    "雅思": ("oulu", "雅思 · 欧露"),
+    "百惠": ("baihui", "百惠 · 柔康莱"),
+    "美乐美妆连锁": ("meile", "美乐美妆连锁 · 谜库"),
+    "万华大药房": ("wanhua", "万华大药房 · 卿易舒"),
+    "汇鑫源·休闲庄": ("huixinyuan", "汇鑫源·休闲庄"),
+    "食锦荟": ("shijinhui", "食锦荟"),
 }
 LOGO_PARTNERS = ("自由点", "维邦", "柔贝佳", "阳阳纸业", "桔子姑娘", "洁柔")
 
-PROJECT_PRODUCTS = {key: [] for key in PROJECTS}
-for product in OEM_PRODUCTS:
-    PROJECT_PRODUCTS[product.client or product.brand].append(product)
 
 ICONS = {
     "drop": '<path d="M12 2.7C9.4 6.4 5 10.8 5 15a7 7 0 0 0 14 0c0-4.2-4.4-8.6-7-12.3Z"/><path d="M8.7 14.6a3.6 3.6 0 0 0 3 3.6"/>',
@@ -130,30 +126,13 @@ def banner():
 
 
 def partner_strip():
-    logos = []
+    marks = []
     for key in LOGO_PARTNERS:
-        anchor, title, _, scope = PROJECTS[key]
-        logos.append(f'''<a class="partner-mark" href="oem.html#{anchor}" aria-label="{title}，查看{scope}案例">
-            <img src="assets/brand-{anchor}.webp" alt="{title}"><span>{scope}</span></a>''')
+        anchor, name = PARTNERS[key]
+        marks.append(f'<a class="partner-mark" href="oem.html#{anchor}" aria-label="合作品牌：{name}"><img src="assets/brand-{anchor}.webp" alt="{name}"></a>')
     return f'''<section class="partner-section"><div class="wrap"><div class="partner-heading">
-    <h2>OEM 合作品牌</h2><a class="text-link" href="oem.html#portfolio">查看合作项目</a></div>
-    <div class="partner-marks">{''.join(logos)}</div></div></section>'''
-
-
-def featured_cases():
-    entries = [
-        ("freemore", "自由点", "品牌赠品", "p55-1", "湿巾、乳霜纸与冰感小毛巾",
-         "10 片湿巾、40 抽乳霜纸和单片冰感小毛巾，三种规格用于品牌赠品。"),
-        ("vip-paper", "维邦", "日用清洁", "p58-1", "从便携湿巾到家庭装",
-         "卫生湿巾有 10 片与 60 片包装；同系列还覆盖婴儿手口湿巾、厨房湿巾和洗脸柔巾。"),
-        ("wanhua", "万华大药房", "零售渠道定制", "p68-1", "卿易舒渠道定制系列",
-         "湿厕纸采用原生木浆，覆盖 8 片便携装与 40 片家庭装，另有卷纸与洗脸柔巾。"),
-    ]
-    cards = ''.join(f'''<a class="project-feature" href="oem.html#{anchor}"><div class="project-art art-{anchor}">{photosrc(photo,brand_name+"案例产品包装")}</div>
-        <div class="project-copy"><div class="project-byline"><strong>{brand_name}</strong><span>{kind}</span></div>
-        <h3>{title}</h3><p>{copy}</p></div></a>''' for anchor,brand_name,kind,photo,title,copy in entries)
-    return f'''<section class="wrap section"><div class="section-heading"><div>{label("SELECTED PROJECTS")}<h2>代工与定制案例</h2></div>
-        <a class="text-link" href="oem.html#portfolio">{icon("grid")} 全部案例</a></div><div class="project-features">{cards}</div></section>'''
+    <h2>合作品牌</h2><a class="text-link" href="oem.html#portfolio">更多合作伙伴</a></div>
+    <div class="partner-marks">{"".join(marks)}</div></div></section>'''
 
 
 def home():
@@ -161,52 +140,53 @@ def home():
     <div class="wrap hero-inner"><div class="hero-copy"><div class="hero-kicker">{icon("factory")} 四川成都 · 卫生用品制造</div>
     <h1>湿巾与棉柔巾<br><em>OEM 代工</em></h1>
     <p>为品牌、零售渠道与餐饮客户定制生产。<br class="desktop-only">从单片独立装到家庭多片装，按使用场景匹配材质与包装。</p>
-    <div class="actions">{btn("查看 OEM 案例","oem.html#portfolio","grid")}{btn("洽谈定制需求","business.html","chat","outline")}</div>
-    </div></div></section>{partner_strip()}{featured_cases()}
+    <div class="actions">{btn("了解 OEM 代工","oem.html","factory")}{btn("洽谈定制需求","business.html","chat","outline")}</div>
+    </div></div></section>{partner_strip()}
     <section class="factory-strip"><div class="wrap"><div class="split home-works"><div class="split-photo">{photosrc("line","成都大邑基地湿巾生产线现场")}</div><div class="split-copy">
     {label("MANUFACTURING BASE")}<h2>成都大邑生产基地</h2><p>6 条湿巾自动生产线与 2 条棉柔巾自动生产线，承接单片湿巾、多片湿巾及棉柔巾生产。纸巾与湿巾生产已通过 ISO 9001 质量管理体系认证。</p>
     <div class="actions factory-actions">{btn("查看生产能力与资质","manufacturing.html",None,"outline")}<a class="text-link" href="about.html#operations">了解经营投入</a></div></div></div>{stats()}</div></section>
     <section class="wrap range-links"><div><h2>产品与规格</h2><p>查看定制产品、自有品牌及商用纸品的详细规格。</p></div><nav aria-label="产品系列">{''.join(f'<a href="products-{key}.html">{data[0]}</a>' for key,data in FAMILIES.items())}<a href="products.html">全部产品</a></nav></section>{banner()}'''
-    write("index.html","",f"{COMPANY}主营湿巾、棉柔巾 OEM 代工，提供品牌、零售及餐饮定制。查看品牌合作案例、工厂产能与业务联系方式。","index.html",html)
-
-
-def project_panel(key, items):
-    anchor, title, _, scope = PROJECTS[key]
-    products_html = []
-    for p in items:
-        display_name = f"{p.brand} · {p.name}" if p.brand != key else p.name
-        spec = " · ".join(part for part in (p.item, p.size, p.contents) if part)
-        products_html.append(f'''<li><a href="product-{p.slug}.html"><strong>{escape(display_name)}</strong><span>{escape(spec)}</span></a></li>''')
-    first = items[0]
-    return f'''<article class="brand-project" id="{anchor}"><div class="brand-project-intro"><div>{photosrc(first.slug,first.brand+first.name+"包装")}</div>
-      <header><h4>{title}</h4><p>{scope}</p></header></div><ul>{''.join(products_html)}</ul></article>'''
+    write("index.html","",f"{COMPANY}主营湿巾、棉柔巾 OEM 代工，提供品牌、零售及餐饮定制。了解合作品牌、工厂产能与业务联系方式。","index.html",html)
 
 
 def oem():
-    sections = []
-    jump_links = []
-    for section_id, category in [("brand-work", "品牌代工"), ("retail-work", "渠道定制"), ("hospitality-work", "餐饮定制")]:
-        panels = []
-        for key, (_, _, kind, _) in PROJECTS.items():
-            if kind == category:
-                panels.append(project_panel(key, PROJECT_PRODUCTS[key]))
-        sections.append(f'<section class="project-section" id="{section_id}"><h3>{category}</h3><div class="project-directory">{"".join(panels)}</div></section>')
-        jump_links.append(f'<a href="#{section_id}">{category}</a>')
-    formats = [
-        ("巾材与纹路", "维邦洗脸柔巾采用 80 g 珍珠纹植物源纤维；谜库洗脸柔巾采用 95 g 水波纹植物源纤维。", "p67-1", "查看谜库规格"),
-        ("尺寸与装量", "同为厨房清洁场景，维邦有 260 × 200 mm、45 片装；谜库有 200 × 250 mm、40 片装。", "p59-1", "查看维邦规格"),
-        ("品牌包装", "洁柔水润柔肤湿巾有两款便携包装，卿易舒湿厕纸则有 8 片装、6 包组合及 40 片家庭装。", "p68-2", "查看卿易舒规格"),
-    ]
-    options = ''.join(f'<article><h3>{title}</h3><p>{copy}</p><a class="text-link" href="product-{slug}.html">{link}</a></article>' for title,copy,slug,link in formats)
-    html = f'''<div class="oem-intro"><div class="wrap">{breadcrumbs(("OEM 代工",None))}<div class="oem-intro-grid"><div>{label("PRIVATE LABEL MANUFACTURING")}
-    <h1>OEM 代工与定制</h1><p class="lead">承接湿巾、棉柔巾与生活用纸的品牌代工，覆盖品牌赠品、零售渠道专供和餐饮独立装等用途。</p>
-    <div class="actions">{btn("浏览合作项目","#portfolio","grid")}{btn("联系业务","business.html","chat","outline")}</div></div>
-    <div class="oem-intro-aside"><strong>{len(OEM_PRODUCTS)}<small>项</small></strong><span>已收录的代工与定制产品规格</span><a href="{DOC}#page=54" class="text-link">{icon("book")} 查阅公司图册</a></div></div></div></div>
-    <section class="wrap section oem-directory-wrap" id="portfolio"><div class="section-heading"><div>{label("PROJECT PORTFOLIO")}<h2>合作品牌与定制项目</h2></div>
-    <nav class="project-jumps" aria-label="按项目类型跳转">{''.join(jump_links)}</nav></div>
-    {''.join(sections)}</section><section class="tinted"><div class="wrap section">{label("PRODUCT SPECIFICATIONS")}<h2>已有项目的选型参考</h2>
-    <div class="spec-options">{options}</div></div></section>{banner()}'''
-    write("oem.html","OEM 代工与定制","自由点、维邦、柔贝佳等品牌代工及零售、餐饮定制的产品规格与合作案例。","oem.html",html)
+    logos = []
+    names = []
+    # Preserve links to the original directory sections.
+    group_anchors = {"美乐美妆连锁": "retail-work", "汇鑫源·休闲庄": "hospitality-work"}
+    for key, (anchor, name) in PARTNERS.items():
+        if key in LOGO_PARTNERS:
+            logos.append(f'<li id="{anchor}"><img src="assets/brand-{anchor}.webp" alt="{name}" loading="lazy"></li>')
+        else:
+            group_id = f' id="{group_anchors[key]}"' if key in group_anchors else ""
+            names.append(f'<li id="{anchor}"><span{group_id}>{name}</span></li>')
+
+    html = f'''<section class="partnership-hero" aria-labelledby="oem-title">
+    <div class="wrap partnership-inner"><div class="partnership-copy">
+    <p class="partnership-location">{icon("loc")} 四川 · 成都大邑</p>
+    <h1 id="oem-title">湿巾与棉柔巾<br><span>OEM 品牌代工</span></h1>
+    <p class="partnership-lead">为品牌方、零售渠道和餐饮客户提供定制生产。<br>巾材、尺寸和包装均可按需沟通。</p>
+    <div class="actions">{btn("联系 OEM 业务","business.html","chat","light-action")}<a class="partner-jump" href="#portfolio">查看合作品牌</a></div>
+    </div></div><picture class="partnership-image"><source media="(max-width: 700px)" srcset="assets/oem-fabric-compact.webp">
+    <img src="assets/oem-fabric-hero.webp" alt="白色压纹棉柔巾、折叠巾片与无字样袋" fetchpriority="high" decoding="async"></picture></section>
+    <div class="partnership-facts"><dl class="wrap">
+    <div><dt>生产面积</dt><dd>4,500 <small>m²</small></dd></div>
+    <div><dt>自动化生产线</dt><dd>8 <small>条</small></dd></div>
+    <div><dt>固定资产投入</dt><dd>500 <small>万元</small></dd></div>
+    </dl></div>
+    <section class="wrap partner-gallery" id="portfolio" aria-labelledby="partner-title">
+    <h2 id="partner-title">合作品牌与客户</h2>
+    <ul class="partner-logos" id="brand-work">{"".join(logos)}</ul>
+    <ul class="partner-names">{"".join(names)}</ul>
+    </section>
+    <section class="oem-services"><div class="wrap service-layout"><div class="service-photo">{photosrc("automatic-wipe-folding","自动化输送带上整齐排列的折叠巾片")}</div>
+    <div class="service-copy"><h2>OEM 定制能力</h2><dl>
+    <div><dt>巾材与纹理</dt><dd>按清洁场景选择巾材、克重与表面纹路。</dd></div>
+    <div><dt>尺寸与装量</dt><dd>根据使用习惯确定单张尺寸、每包片数及组合装量。</dd></div>
+    <div><dt>成品包装</dt><dd>可沟通单片独立装、便携袋装及家庭多片装等形式。</dd></div>
+    </dl><a class="text-link" href="manufacturing.html">{icon("factory")} 查看生产与检测能力</a></div></div></section>
+    {banner()}'''
+    write("oem.html", "OEM 品牌代工", "如是欣湿巾与棉柔巾 OEM 代工服务、合作品牌、生产能力及业务联系方式。", "oem.html", html)
 
 
 def product_card(p):
@@ -254,7 +234,7 @@ def detail(p):
     family = FAMILIES[p.family][0]
     project_link = ""
     if p.channel == "OEM 与定制":
-        anchor, title, _, _ = PROJECTS[p.client or p.brand]
+        anchor, title = PARTNERS[p.client or p.brand]
         project_link = f'<a href="oem.html#{anchor}" class="text-link">查看{escape(title)}项目</a>'
     rows = [('所属业务', p.channel), ('品牌 / 系列', p.brand), ('合作项目', p.client),
             ('产品货号', p.item), ('尺寸 / 尺码', p.size), ('包装规格', p.contents),
