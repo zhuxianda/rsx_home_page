@@ -168,13 +168,14 @@ def home():
 
 def oem():
     html = f'''<section class="partnership-hero" aria-labelledby="oem-title">
+    <picture class="sample-display"><source media="(max-width: 920px)" srcset="assets/oem-packaging-mobile.webp" width="1000" height="582">
+    <img src="assets/oem-packaging-panorama.webp" width="2079" height="756" alt="独立小袋、便携湿巾袋和家庭翻盖装的无品牌包装示意" fetchpriority="high" decoding="async"></picture>
     <div class="wrap partnership-inner"><div class="partnership-copy">
-    <p class="partnership-location">{icon("loc")} 四川 · 成都大邑</p>
-    <h1 id="oem-title">湿巾与棉柔巾<br><span>OEM 品牌代工</span></h1>
-    <p class="partnership-lead">为品牌方、零售渠道和餐饮客户提供定制生产。<br>巾材、尺寸和包装均可按需沟通。</p>
-    <div class="actions">{btn("联系 OEM 业务","business.html","chat","light-action")}<a class="partner-jump" href="#portfolio">查看合作品牌</a></div>
-    </div></div><picture class="partnership-image"><source media="(max-width: 700px)" srcset="assets/oem-fabric-compact.webp">
-    <img src="assets/oem-fabric-hero.webp" alt="白色压纹棉柔巾、折叠巾片与无字样袋" fetchpriority="high" decoding="async"></picture></section>
+    <p class="partnership-kicker">湿巾与棉柔巾 <span>·</span> 成都大邑</p>
+    <h1 id="oem-title"><span lang="en">OEM</span> 品牌代工</h1>
+    <p class="partnership-lead">为品牌、零售与餐饮客户定制生产。<br>可选单片独立装、便携袋装与家庭翻盖装。</p>
+    <div class="actions">{btn("联系 OEM 业务","business.html","chat")}<a class="partner-jump" href="#portfolio">查看合作品牌</a></div>
+    </div></div></section>
     <div class="partnership-facts"><dl class="wrap">
     <div><dt>生产面积</dt><dd>4,500 <small>m²</small></dd></div>
     <div><dt>自动化生产线</dt><dd>8 <small>条</small></dd></div>
