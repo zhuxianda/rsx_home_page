@@ -9,6 +9,7 @@ COMPANY = "四川省如是欣生物科技有限公司"
 ADDRESS = "四川省成都市大邑县青霞街道兴业七路29号"
 MAP = "https://uri.amap.com/search?" + urlencode({"keyword": ADDRESS})
 DOC = "assets/rushixin-profile.pdf"
+DOC_PAGES = 75
 CONTACT_NAME = "苏宏"
 CONTACT_DISPLAY = "136 7908 6363"
 CONTACT_TEL = "tel:" + CONTACT_DISPLAY.replace(" ", "")
@@ -128,12 +129,16 @@ def banner():
     {btn("电话 "+CONTACT_DISPLAY,CONTACT_TEL,"phone","on-dark")}</div></section>'''
 
 
+def partner_caption(key):
+    return PARTNER_CAPTIONS.get(key, PARTNERS[key][1])
+
+
 def partner_wall(linked=False):
     tiles = []
     # Retain category anchors in older links while showing only brand identities.
     old_anchors = {"美乐美妆连锁": "retail-work", "汇鑫源·休闲庄": "hospitality-work"}
-    for key, (anchor, name) in PARTNERS.items():
-        caption = PARTNER_CAPTIONS.get(key, name)
+    for key, (anchor, _) in PARTNERS.items():
+        caption = partner_caption(key)
         mark = MARK_NAMES.get(key, caption)
         alt = "" if mark == caption else mark + "标识"
         caption_id = f' id="{old_anchors[key]}"' if not linked and key in old_anchors else ""
@@ -197,7 +202,11 @@ def oem():
 
 def product_card(p):
     title = escape(p.name)
-    search_terms = " ".join((p.brand, p.name, p.item, p.barcode, p.client, p.channel, p.contents, p.size))
+    fields = [p.brand, p.name, p.item, p.barcode, p.client, p.channel, p.contents, p.size]
+    if p.channel == "OEM 与定制":
+        key = p.client or p.brand
+        fields.extend((PARTNERS[key][1], partner_caption(key)))
+    search_terms = " ".join(fields)
     subtitle = " · ".join(escape(value) for value in (p.size, p.contents) if value)
     item = f'<span class="item-code">{escape(p.item)}</span>' if p.item else ""
     channel_label = " · OEM 定制" if p.channel == "OEM 与定制" else ""
@@ -217,11 +226,11 @@ def products(key=None):
         return f'<a href="{path}"{attr}>{n}</a>'
     links = ''.join(tab(k, n) for k, n in tabs)
     subset = sorted((p for p in PRODUCTS if not key or p.family == key), key=lambda p: p.channel != "OEM 与定制")
-    channels = sorted({p.channel for p in subset}, key=("自有品牌", "其他品牌", "OEM 与定制", "商用纸品").index)
+    channels = sorted({p.channel for p in PRODUCTS}, key=("自有品牌", "其他品牌", "OEM 与定制", "商用纸品").index)
     options = ''.join(f'<option>{channel}</option>' for channel in channels)
     cards = ''.join(product_card(p) for p in subset)
     html = f'''<div class="page-intro"><div class="wrap">{breadcrumbs(("产品中心",None))}{label("PRODUCT CATALOGUE")}
-    <h1>产品中心</h1><p>优先展示 OEM 代工与渠道定制产品。也可按系列查看自有品牌和商用纸品，核对包装、规格及图册原页。</p><a class="text-link catalogue-projects" href="oem.html#portfolio">{icon("book")} 按合作品牌浏览项目</a></div></div>
+    <h1>产品中心</h1><p>优先展示 OEM 代工与渠道定制产品。也可按系列查看自有品牌和商用纸品，核对包装、规格及图册原页。</p><a class="text-link catalogue-projects" href="oem.html#portfolio">{icon("book")} 查看合作品牌</a></div></div>
     <section class="wrap catalogue"><div class="catalogue-tools"><nav class="filters" aria-label="产品系列">{links}</nav>
     <a class="text-link" href="{DOC}" download>{icon("download")} 下载完整图册</a></div>
     <h2 class="sr-only">{family}</h2>
@@ -238,10 +247,10 @@ def products(key=None):
 
 def detail(p):
     family = FAMILIES[p.family][0]
-    project_link = ""
+    partner_link = ""
     if p.channel == "OEM 与定制":
-        anchor, title = PARTNERS[p.client or p.brand]
-        project_link = f'<a href="oem.html#{anchor}" class="text-link">查看{escape(title)}项目</a>'
+        anchor, _ = PARTNERS[p.client or p.brand]
+        partner_link = f'<a href="oem.html#{anchor}" class="text-link">查看合作品牌</a>'
     rows = [('所属业务', p.channel), ('品牌 / 系列', p.brand), ('合作项目', p.client),
             ('产品货号', p.item), ('尺寸 / 尺码', p.size), ('包装规格', p.contents),
             ('装箱规格', p.carton), ('材质', p.material), ('图册条码', p.barcode)]
@@ -251,9 +260,27 @@ def detail(p):
     html = f'''<div class="wrap">{breadcrumbs(("产品中心","products.html"),(family,"products-"+p.family+".html"),(escape(p.name),None))}
     <section class="detail-grid"><div class="detail-art {p.family}">{photosrc(p.slug,p.brand+p.name+"包装",lazy=False)}</div>
     <div>{label(FAMILIES[p.family][1].upper())}<p class="product-brand">{escape(p.brand)}</p><h1>{escape(p.name)}</h1>{lead}
-    <dl class="specs">{specs}</dl>{note}<div class="detail-references">{project_link}<a class="source-page text-link" href="{DOC}#page={p.page}">{icon("book")} 查看图册第 {p.page} 页</a></div>
+    <dl class="specs">{specs}</dl>{note}<div class="detail-references">{partner_link}<a class="source-page text-link" href="{profile_url(p.page)}">{icon("book")} 查看图册第 {p.page} 页</a></div>
     <div class="actions">{btn("洽谈 OEM 定制","business.html","chat")}{btn("查看同系列","products-"+p.family+".html",None,"outline")}</div></div></section></div>'''
     write("product-"+p.slug+".html",p.brand+" · "+p.name,p.description or f"{p.brand}{p.name}的产品包装与规格，见公司图册第 {p.page} 页。","products.html",html)
+
+
+def profile_url(page):
+    return f"profile-{page}.html"
+
+
+def profile_pages():
+    for page in range(1, DOC_PAGES + 1):
+        image = f"assets/profile-pages/page-{page}.jpg"
+        previous = f'<a href="{profile_url(page - 1)}" rel="prev">上一页</a>' if page > 1 else '<span aria-disabled="true">上一页</span>'
+        following = f'<a href="{profile_url(page + 1)}" rel="next">下一页</a>' if page < DOC_PAGES else '<span aria-disabled="true">下一页</span>'
+        page_title = f"图册第 {page} 页"
+        html = f'''<section class="wrap brochure-reader">{breadcrumbs(("产品中心","products.html"),(page_title,None))}
+        <div class="brochure-heading"><h1>公司与产品图册</h1><a class="text-link" href="{DOC}" download>{icon("download")} 下载原版 PDF</a></div>
+        <nav class="brochure-pager" aria-label="图册翻页">{previous}<strong>第 {page} 页 / 共 {DOC_PAGES} 页</strong>{following}</nav>
+        <a class="brochure-sheet" href="{image}" aria-label="查看第 {page} 页原尺寸图像"><img src="{image}" width="1440" height="810" alt="公司与产品{page_title}"></a>
+        </section>'''
+        write(profile_url(page), page_title, f"在线查看如是欣公司与产品{page_title}。", "products.html", html)
 
 
 def manufacturing():
@@ -268,7 +295,7 @@ def manufacturing():
         f'<div class="process-scene">{photosrc(slug, alt, lazy=False)}<span>{title}</span></div>'
         for slug, title, alt in scenes
     )
-    html=f'''<div class="wrap">{breadcrumbs(("制造实力",None))}<section class="feature-hero manufacturing-hero"><div>{label("MANUFACTURING")}<h1>制造实力</h1><p class="lead">成都大邑工业园区设有湿巾与棉柔巾自动生产线及厂内实验室，支持品牌代工所需的单片、多片和家庭装生产。</p><a href="oem.html#portfolio" class="text-link catalogue-projects">查看产线对应的代工案例</a></div>
+    html=f'''<div class="wrap">{breadcrumbs(("制造实力",None))}<section class="feature-hero manufacturing-hero"><div>{label("MANUFACTURING")}<h1>制造实力</h1><p class="lead">成都大邑工业园区设有湿巾与棉柔巾自动生产线及厂内实验室，支持品牌代工所需的单片、多片和家庭装生产。</p><a href="oem.html#portfolio" class="text-link catalogue-projects">查看合作品牌</a></div>
     <figure class="manufacturing-gallery"><div class="process-scenes">{gallery}</div></figure></section>{stats()}</div>
     <section class="wrap section" id="production-and-testing"><div class="section-heading"><div>{label("INSIDE THE FACTORY")}<h2>生产与检测</h2></div></div>
     <div class="process-grid"><article>{photosrc("automatic-wipe-folding","折叠成叠的湿巾沿自动化输送带排列前行")}<div><h3>自动化生产</h3><p>6 条湿巾生产线、2 条棉柔巾生产线，覆盖单片、多片及 80 片婴儿湿巾等包装规格。</p></div></article>
@@ -287,7 +314,7 @@ def about():
     <section class="operations-band" id="operations"><div class="wrap section">{label("OPERATING CAPACITY")}<h2>经营与投入</h2>
     <div class="operating-facts"><article><strong>500 <small>万元</small></strong><h3>固定资产投入</h3><p>大邑基地生产面积 4,500 平方米，配置 8 条自动化生产线。</p></article>
     <article><strong>1,600 <small>吨 / 年</small></strong><h3>设计无纺布吞吐量</h3><p>湿巾与棉柔巾生产并行，适配品牌客户的不同包装规格。</p></article>
-    <article><strong>4,000 <small>万元</small></strong><h3>设计产能可达产值</h3><p>公司图册按设计产能列示的可达产值。</p></article></div><a class="text-link" href="{DOC}#page=3">{icon("book")} 查看图册经营资料</a></div></section>
+    <article><strong>4,000 <small>万元</small></strong><h3>设计产能可达产值</h3><p>公司图册按设计产能列示的可达产值。</p></article></div><a class="text-link" href="{profile_url(3)}">{icon("book")} 查看图册经营资料</a></div></section>
     <section class="tinted"><div class="wrap section history"><div>{label("OUR HISTORY")}<h2>发展历程</h2></div><ol class="timeline">{events}</ol></div></section>
     <section class="wrap section"><div class="section-heading"><div>{label("OUR BRANDS")}<h2>三大自有品牌</h2></div></div>
     <div class="brand-grid"><article><h3>家必备</h3><p>涵盖卫生湿巾、婴儿手口湿巾、厨房湿巾与生活用纸。</p></article><article><h3>片片亲</h3><p>面向日常清洁与洗护，提供湿巾、洗脸柔巾与棉柔巾。</p></article><article><h3>晓宝</h3><p>以婴儿手口湿巾、卫生湿巾及亲肤棉柔巾服务家庭日常护理。</p></article></div></section>{banner()}'''
@@ -298,7 +325,7 @@ def business():
     html = f'''<div class="oem-intro"><div class="wrap">{breadcrumbs(("合作洽谈",None))}
     <div class="oem-intro-grid business-intro"><div>{label("BUSINESS ENQUIRIES")}<h1>OEM 合作洽谈</h1>
     <p class="lead">品牌代工、渠道专供或餐饮定制，均可直接联系业务负责人。已有目标产品的客户，可以带上图册货号或包装规格沟通。</p>
-    <a class="text-link catalogue-projects" href="oem.html#portfolio">{icon("book")} 浏览品牌合作案例</a></div>
+    <a class="text-link catalogue-projects" href="oem.html#portfolio">{icon("book")} 查看合作品牌</a></div>
     <div class="business-card" id="contact"><span>OEM 业务联系人</span><h2>{CONTACT_NAME}</h2>
     <a class="business-phone" href="{CONTACT_TEL}" aria-label="拨打{CONTACT_NAME}的业务电话 {CONTACT_DISPLAY}">{icon("phone")}{CONTACT_DISPLAY}</a></div></div></div></div>
     <section class="wrap section">{label("PROJECT BRIEF")}<h2>洽谈时可提供的信息</h2>
@@ -308,7 +335,7 @@ def business():
     <section class="contact-area"><div class="wrap contact-grid"><div>{label("COMPANY ADDRESS")}<h2>成都大邑生产基地</h2><p>{COMPANY}</p><address>{icon("loc")}<span id="address">{ADDRESS}</span></address>
     <div class="actions">{btn("在高德地图查看",MAP,"loc","outline")}<button class="text-link js-copy" type="button" hidden>{icon("copy")}<span>复制地址</span></button></div><p class="sr-only" id="copy-status" role="status"></p></div>
     <div class="download-card">{icon("book")}<h3>公司与产品图册</h3><p>第 55–71 页收录品牌代工与定制项目的包装、材料和规格。</p>
-    <a class="text-link" href="{DOC}" download>{icon("download")} 下载 PDF 图册 <small>75 页</small></a></div></div></section>'''
+    <div class="brochure-links"><a class="text-link" href="{profile_url(1)}">{icon("book")} 在线阅览</a><a class="text-link" href="{DOC}" download>{icon("download")} 下载 PDF 图册 <small>{DOC_PAGES} 页</small></a></div></div></div></section>'''
     write("business.html","OEM 合作洽谈",f"联系{COMPANY}业务负责人{CONTACT_NAME}，沟通湿巾、棉柔巾与纸品 OEM 项目。","business.html",html)
 
 
@@ -320,6 +347,7 @@ if __name__ == "__main__":
         products(key)
     for product in PRODUCTS:
         detail(product)
+    profile_pages()
     manufacturing()
     about()
     business()

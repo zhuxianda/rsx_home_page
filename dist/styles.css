@@ -505,3 +505,15 @@ a.partner-mark:hover span { text-decoration: underline; text-underline-offset: 3
   .service-photo { height: auto; aspect-ratio: 2; }
   .service-copy dl { margin: 14px 0 4px; }
 }
+
+.brochure-reader { padding-bottom: clamp(32px, 5vw, 72px); }
+.brochure-heading, .brochure-links { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; }
+.brochure-heading { justify-content: space-between; margin: 12px 0 20px; }
+.brochure-heading h1 { font-size: clamp(1.75rem, 3.4vw, 2.8rem); }
+.brochure-pager { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-block: 8px; border-top: 1px solid var(--line); }
+.brochure-pager a, .brochure-pager span { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px; }
+.brochure-pager a { color: var(--green); text-decoration: underline; text-underline-offset: 4px; }
+.brochure-pager span { color: var(--muted); opacity: .65; }
+.brochure-pager strong { font-size: .94rem; }
+.brochure-sheet { display: block; border: 1px solid var(--line); cursor: zoom-in; }
+.brochure-sheet img { width: 100%; height: auto; }

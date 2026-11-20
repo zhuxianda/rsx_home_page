@@ -39,8 +39,9 @@ if (filterBar) {
   const channel = document.getElementById("product-channel");
   const count = document.getElementById("visible-count");
   const empty = document.querySelector(".empty-results");
+  const familyLinks = document.querySelectorAll(".catalogue-tools .filters a");
   const url = new URL(window.location.href);
-  const normalize = (value) => value.normalize("NFKC").toLowerCase().replace(/[\s-]+/g, "");
+  const normalize = (value) => value.normalize("NFKC").toLowerCase().replace(/[\s·-]+/g, "");
   const cards = Array.from(document.querySelectorAll(".product-card"), (card) => ({
     node: card,
     terms: normalize(card.dataset.search),
@@ -50,6 +51,15 @@ if (filterBar) {
   query.value = url.searchParams.get("q") || "";
   channel.value = url.searchParams.get("channel") || "";
   if (channel.selectedIndex < 0) channel.selectedIndex = 0;
+
+  function withFilters(href) {
+    const target = new URL(href);
+    for (const [key, value] of [["q", query.value.trim()], ["channel", channel.value]]) {
+      if (value) target.searchParams.set(key, value);
+      else target.searchParams.delete(key);
+    }
+    return target;
+  }
 
   function filterProducts(updateUrl) {
     const words = query.value.trim().split(/\s+/).map(normalize);
@@ -62,13 +72,9 @@ if (filterBar) {
     }
     count.textContent = String(matched);
     empty.hidden = matched !== 0;
+    for (const link of familyLinks) link.href = withFilters(link.href).href;
     if (updateUrl && /^https?:$/.test(location.protocol)) {
-      const next = new URL(window.location.href);
-      for (const [key, value] of [["q", query.value.trim()], ["channel", channel.value]]) {
-        if (value) next.searchParams.set(key, value);
-        else next.searchParams.delete(key);
-      }
-      history.replaceState(history.state, "", next);
+      history.replaceState(history.state, "", withFilters(location.href));
     }
   }
 
