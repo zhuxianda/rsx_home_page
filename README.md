@@ -4,14 +4,14 @@
 
 ## 修改与本地预览
 
-在仓库根目录使用 Python 3 构建页面。页面模板在 `build.py`，产品数据在 `catalogue.json`，样式、脚本、图片和 PDF 在 `dist/`。
+在仓库根目录使用 Python 3 构建页面。页面模板在 `build.py`，产品数据在 `catalogue.json`，英文页面文案在 `site_en.py`，英文产品名称与规格在 `catalogue_en.py`。样式、脚本、图片和 PDF 在 `dist/`。
 
 ```sh
 python3 build.py
 python3 -m http.server 8000 --directory dist
 ```
 
-打开 `http://localhost:8000/` 查看效果，将改动提交并推送到 GitHub 的 `main` 分支。
+打开 `http://localhost:8000/` 查看默认中文版，或打开 `http://localhost:8000/en/` 查看英文版。页首语言按钮通往当前页面的另一版本。两种语言共用图片和中文版 PDF 图册。核对后将改动提交并推送到 GitHub 的 `main` 分支。
 
 ## 更新线上版本
 

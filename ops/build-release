@@ -13,7 +13,7 @@ trap 'rm -rf -- "$stage"' EXIT
 if [[ ! -d "$release" ]]; then
     git archive "$commit" | tar -x -C "$stage"
     python3 "$stage/build.py"
-    for file in index.html products.html oem.html business.html assets/rushixin-profile.pdf; do
+    for file in index.html products.html oem.html business.html en/index.html en/products.html en/business.html assets/rushixin-profile.pdf; do
         test -s "$stage/dist/$file"
     done
     mv "$stage/dist" "$release"

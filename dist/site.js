@@ -1,3 +1,17 @@
+const english = document.documentElement.lang === "en";
+const languageSwitch = document.querySelector(".language-switch");
+
+function syncLanguageLink() {
+  if (!languageSwitch) return;
+  const target = new URL(languageSwitch.href);
+  target.search = location.search;
+  target.hash = location.hash;
+  languageSwitch.href = target.href;
+}
+syncLanguageLink();
+window.addEventListener("hashchange", syncLanguageLink);
+window.addEventListener("pageshow", syncLanguageLink);
+
 const menu = document.querySelector(".mobile-nav");
 if (menu) {
   document.addEventListener("click", (event) => {
@@ -19,16 +33,16 @@ if (copyButton && navigator.clipboard?.writeText) {
     const status = document.getElementById("copy-status");
     try {
       await navigator.clipboard.writeText(address.textContent.trim());
-      copyButton.querySelector("span").textContent = "地址已复制";
-      status.textContent = "公司地址已复制到剪贴板";
+      copyButton.querySelector("span").textContent = english ? "Address copied" : "地址已复制";
+      status.textContent = english ? "Company address copied to clipboard" : "公司地址已复制到剪贴板";
     } catch {
       const range = document.createRange();
       range.selectNodeContents(address);
       const selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(range);
-      copyButton.querySelector("span").textContent = "请复制选中的地址";
-      status.textContent = "地址已选中，可通过系统复制功能复制";
+      copyButton.querySelector("span").textContent = english ? "Copy selected address" : "请复制选中的地址";
+      status.textContent = english ? "Address selected. Use your device’s copy command." : "地址已选中，可通过系统复制功能复制";
     }
   });
 }
@@ -51,7 +65,7 @@ if (filterBar) {
 
   query.value = url.searchParams.get("q") || "";
   if (url.searchParams.get("channel") === "其他品牌") {
-    channel.add(new Option("其他品牌（已归入代工 OEM）", "其他品牌"));
+    channel.add(new Option(english ? "Other brands (now under OEM)" : "其他品牌（已归入代工 OEM）", "其他品牌"));
   }
   channel.value = url.searchParams.get("channel") || "";
   if (channel.selectedIndex < 0) channel.selectedIndex = 0;
@@ -79,6 +93,7 @@ if (filterBar) {
     for (const link of categoryLinks) link.href = withFilters(link.href).href;
     if (updateUrl && /^https?:$/.test(location.protocol)) {
       history.replaceState(history.state, "", withFilters(location.href));
+      syncLanguageLink();
     }
   }
 

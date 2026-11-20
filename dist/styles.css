@@ -533,3 +533,48 @@ a.partner-mark:hover span { text-decoration: underline; text-underline-offset: 3
 .brochure-pager strong { font-size: .94rem; }
 .brochure-sheet { display: block; border: 1px solid var(--line); cursor: zoom-in; }
 .brochure-sheet img { width: 100%; height: auto; }
+
+/* The other language stays within reach, including when the navigation collapses. */
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 44px;
+  padding-inline: .65rem;
+  border-radius: 6px;
+  color: var(--deep);
+  font-size: .9rem;
+  font-weight: 550;
+  white-space: nowrap;
+}
+.language-switch .icon { width: 1.05rem; height: 1.05rem; }
+.language-switch:hover, .language-switch:focus-visible { background: var(--mint); }
+html:lang(en) { font-family: "Helvetica Neue", Arial, sans-serif; }
+html:lang(en) .brand-type strong { letter-spacing: -.035em; }
+html:lang(en) .brand-type small { letter-spacing: .18em; }
+html:lang(en) .actions { flex-wrap: wrap; }
+html:lang(en) .stat-icon { flex-shrink: 0; }
+html:lang(en) .partner-mark span { overflow-wrap: anywhere; }
+html:lang(en) .oem-home-hero h1 { font-size: clamp(2.8rem, 4.4vw, 4.65rem); }
+html:lang(en) .hero-kicker { letter-spacing: .02em; }
+
+@media (min-width: 961px) and (max-width: 1199px) {
+  .header-inner { width: calc(100% - 40px); gap: 12px; }
+  .header-inner .desktop-nav { gap: 14px; }
+  .header-inner .nav-tools { gap: 5px; }
+  .header-inner .brand { gap: 9px; }
+  .header-inner .brand-type { padding-left: 9px; }
+  .header-inner .oem-hotline { padding-inline: 10px; }
+  .header-inner .hotline-action { display: none; }
+  .header-inner .hotline-number { font-size: 1.05rem; }
+}
+@media (max-width: 700px) {
+  .language-switch { padding-inline: .45rem; }
+  html:lang(en) .oem-home-hero h1 { font-size: clamp(2.5rem, 9.2vw, 3.65rem); }
+  html:lang(en) .stat { align-items: flex-start; padding-left: 6%; }
+  html:lang(en) .stat:nth-child(odd) { padding-left: 0; }
+  html:lang(en) .stat-desc { line-height: 1.4; }
+  html:lang(en) .partnership-facts dl > div { padding-inline: 3px; text-align: center; }
+  html:lang(en) .partnership-facts dt { line-height: 1.35; }
+}
