@@ -332,3 +332,135 @@ figcaption { margin-top: 9px; color: var(--muted); font-size: .87rem; }
   .header-cta { padding-inline: 10px; font-size: .85rem; }
   .header-cta .icon { display: none; }
 }
+
+/* OEM portfolio and procurement pages */
+.oem-home-hero { background: #dde7dc; }
+.oem-home-hero::after { background: linear-gradient(90deg,rgba(237,247,238,.78),rgba(237,247,238,.43) 34%,transparent 57%); }
+.oem-home-hero .hero-inner { min-height: clamp(442px,34.5vw,540px); }
+.oem-home-hero .hero-copy { max-width: 46%; }
+.oem-home-hero h1 { font-size: clamp(3.4rem,4.9vw,5rem); }
+.oem-home-hero h1 em { font-family: "Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif; }
+.oem-home-hero .hero-copy p { max-width: 435px; }
+.partner-section { border-bottom: 1px solid var(--line); padding: 28px 0 24px; }
+.partner-heading { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+.partner-heading h2 { font-size: 1.18rem; letter-spacing: .015em; }
+.partner-heading .text-link { font-size: .87rem; }
+.partner-marks { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); margin-top: 18px; }
+.partner-mark { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 4px; border-left: 1px solid var(--line); }
+.partner-mark:first-child { border-left: 0; }
+.partner-mark img { width: min(90%,126px); height: 46px; object-fit: contain; transition: transform .18s; }
+.partner-mark span { color: var(--muted); font-size: .82rem; text-align: center; }
+.partner-mark:hover img { transform: translateY(-2px); }
+.partner-mark:hover span { color: var(--green); text-decoration: underline; }
+.project-features, .spec-options, .operating-facts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 22px; }
+.project-feature { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; transition: border-color .18s, transform .18s; }
+.project-feature:hover { border-color: #8cb7a3; transform: translateY(-2px); }
+.project-art { aspect-ratio: 2.05; display: grid; place-items: center; }
+.project-art img { width: 74%; height: 77%; min-height: 0; object-fit: contain; mix-blend-mode: multiply; }
+.art-freemore { background: #f7f1ef; } .art-vip-paper { background: #eaf4ec; } .art-wanhua { background: #f7f4e7; }
+.project-copy { padding: 21px; }
+.project-byline { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; }
+.project-byline strong { font-size: 1rem; color: var(--green); }
+.project-byline span { padding-left: 10px; border-left: 1px solid #acd0bd; font-size: .82rem; color: #597568; }
+.project-copy h3 { margin: 8px 0; font-size: 1.25rem; }
+.project-copy p, .spec-options p, .operating-facts p, .range-links p { color: var(--muted); font-size: 1rem; line-height: 1.8; }
+.home-works { padding-bottom: 32px; }
+.factory-strip .stats { border-top: 1px solid #cddfd2; }
+.range-links { padding-top: 48px; display: flex; justify-content: space-between; gap: 25px; align-items: center; }
+.range-links h2 { font-size: 1.65rem; }
+.range-links p { margin-top: 5px; }
+.range-links nav, .project-jumps { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.range-links nav a, .project-jumps a { display: inline-block; white-space: nowrap; padding: 8px 13px; background: #f4f8f5; color: var(--deep); border: 1px solid var(--line); border-radius: 5px; font-size: .9rem; }
+.range-links nav a:hover, .project-jumps a:hover { background: #e6f1e9; }
+.footer-phone { display: inline-block; margin-top: 8px; color: var(--green); font-size: .88rem; overflow-wrap: anywhere; }
+.footer-phone:hover, .business-phone:hover { text-decoration: underline; text-underline-offset: 3px; }
+.oem-intro { background: linear-gradient(115deg,#f2f8f4,#dfebe2); border-bottom: 1px solid var(--line); }
+.oem-intro-grid { display: grid; grid-template-columns: minmax(0,1.45fr) minmax(215px,.55fr); gap: clamp(24px,6vw,100px); align-items: center; padding: 25px 0 45px; }
+.oem-intro-grid h1 { font-size: clamp(2.3rem,3.8vw,4.3rem); margin-top: 10px; line-height: 1.18; letter-spacing: -.045em; }
+.oem-intro-grid .actions { margin-top: 18px; }
+.oem-intro-aside { border-left: 1px solid #b4cec0; padding-left: clamp(20px,3.3vw,58px); display: grid; justify-items: start; gap: 9px; }
+.oem-intro-aside > strong { font: 520 clamp(3.4rem,5.4vw,5rem)/1 "Helvetica Neue",Arial,sans-serif; letter-spacing: -.055em; color: var(--deep); }
+.oem-intro-aside small { font: 550 1rem "PingFang SC",sans-serif; letter-spacing: 0; margin-left: 7px; }
+.oem-intro-aside > span { color: var(--muted); font-size: .95rem; }
+.oem-directory-wrap { padding-top: 44px; }
+.project-section { margin-top: 29px; scroll-margin-top: 20px; }
+.project-section > h3 { font-size: 1.24rem; margin-bottom: 14px; }
+.project-directory { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); align-items: start; gap: 16px; }
+.brand-project { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; scroll-margin-top: 16px; }
+.brand-project:target { border-color: var(--green); box-shadow: 0 0 0 2px #16755826; }
+.brand-project-intro { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #f2f7f2; }
+.brand-project-intro > div { width: 64px; height: 55px; flex: none; display: grid; place-items: center; }
+.brand-project-intro img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.brand-project h4 { margin: 0; font-size: 1.05rem; }
+.brand-project header p { margin-top: 3px; font-size: .82rem; line-height: 1.5; color: var(--muted); }
+.brand-project ul { margin: 0; padding: 0 16px; list-style: none; }
+.brand-project li + li { border-top: 1px solid #e5eee8; }
+.brand-project li a { display: grid; gap: 3px; padding: 10px 0; }
+.brand-project li strong { font-size: .95rem; font-weight: 550; }
+.brand-project li span { font-size: .80rem; line-height: 1.45; color: var(--muted); }
+.brand-project li a:hover strong { text-decoration: underline; color: var(--green); }
+.spec-options, .operating-facts { margin-top: 24px; }
+.spec-options article { border-top: 2px solid #9ac0a9; padding: 18px 7px 0 0; }
+.spec-options h3, .operating-facts h3 { margin: 0 0 8px; }
+.spec-options a { margin-top: 8px; }
+.operations-band { background: #fff; border-top: 1px solid var(--line); }
+.operating-facts { margin-bottom: 18px; }
+.operating-facts article { padding: 21px; background: #f2f7f2; border-radius: 10px; }
+.operating-facts strong { display: block; margin-bottom: 12px; color: var(--deep); font: 600 clamp(2rem,3.2vw,3.5rem)/1.1 "Helvetica Neue",sans-serif; letter-spacing: -.05em; }
+.operating-facts small { font-size: .87rem; letter-spacing: 0; }
+.operating-facts h3 { font-size: 1.05rem; }
+.catalogue-projects { margin-top: 10px; }
+.detail-references { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 19px; }
+.detail-references .source-page { margin: 0; }
+.business-intro { grid-template-columns: minmax(0,1.25fr) minmax(260px,.75fr); }
+.business-card { padding: clamp(22px,3vw,41px); border-radius: 13px; background: #185342; color: #fff; }
+.business-card > span { font-size: .9rem; color: #d4eadb; }
+.business-card h2 { font-size: 1.8rem; margin: 8px 0 13px; }
+.business-phone { display: flex; align-items: center; gap: 10px; font: 550 clamp(1.32rem,2.1vw,1.9rem)/1.35 "Helvetica Neue",Arial,sans-serif; white-space: nowrap; }
+.business-phone .icon { width: 20px; }
+@media (min-width: 761px) and (max-width: 1000px) {
+  .desktop-nav { gap: 16px; }
+  .desktop-nav a { font-size: .88rem; }
+  .project-directory { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .project-features { gap: 12px; }
+  .project-copy { padding: 14px; }
+}
+@media (max-width: 850px) {
+  .range-links { flex-direction: column; align-items: start; }
+  .partner-mark img { width: 85%; height: 37px; }
+}
+@media (max-width: 760px) {
+  .partner-marks { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px 0; }
+  .partner-mark:nth-child(4) { border-left: 0; }
+  .project-features, .operating-facts, .spec-options { grid-template-columns: 1fr; }
+  .project-directory { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .project-features { gap: 14px; }
+  .project-art { aspect-ratio: 2.45; }
+  .oem-directory-wrap .section-heading { flex-direction: column; align-items: start; gap: 13px; }
+  .oem-intro-grid { grid-template-columns: 1fr; gap: 24px; padding: 10px 0 28px; }
+  .oem-intro-aside { display: flex; flex-wrap: wrap; align-items: baseline; gap: 7px 12px; padding: 15px 0 0; border: 0; border-top: 1px solid var(--line); }
+  .oem-intro-aside > strong { font-size: 2.6rem; }
+  .oem-intro-aside a { font-size: .85rem; }
+  .business-intro { gap: 16px; }
+  .spec-options article { padding-top: 13px; }
+}
+@media (max-width: 700px) {
+  .oem-home-hero { display: flex; flex-direction: column; background: #e0e9de; }
+  .oem-home-hero picture { display: block; position: relative; inset: auto; order: 2; height: clamp(182px,48vw,290px); z-index: 0; mask-image: linear-gradient(transparent,black 14%); }
+  .oem-home-hero .hero-image { object-position: center 60%; }
+  .oem-home-hero::after { display: none; }
+  .oem-home-hero .hero-inner { min-height: 0; }
+  .oem-home-hero .hero-copy { padding: 28px 0 13px; max-width: 100%; }
+  .oem-home-hero h1 { font-size: clamp(2.6rem,9.8vw,3.85rem); }
+  .oem-home-hero .hero-copy p { max-width: 100%; }
+  .partner-section { padding: 19px 0; }
+  .partner-heading h2 { font-size: 1.06rem; }
+  .partner-marks { margin-top: 12px; }
+  .partner-mark { gap: 5px; }
+  .partner-mark img { width: min(82%,102px); height: 36px; }
+  .partner-mark span { font-size: .76rem; }
+  .project-directory { grid-template-columns: 1fr; }
+  .range-links { padding-top: 29px; }
+}
+.factory-actions { margin-top: 22px; flex-wrap: wrap; gap: 10px 18px; }
+.factory-actions .button { margin-top: 0; }
