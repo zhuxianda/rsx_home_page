@@ -220,7 +220,7 @@ def partner_strip():
 
 
 def home():
-    html = f'''<section class="hero oem-home-hero"><picture><source media="(max-width: 700px)" srcset="{shared("assets/oem-samples-mobile.webp")}"><img class="hero-image" src="{shared("assets/oem-samples-hero.webp")}" alt="{t("成卷巾材、翻盖湿巾和单片袋装的包装形式示意")}" fetchpriority="high"></picture>
+    html = f'''<section class="hero oem-home-hero"><picture><source media="(max-width: 1199px)" srcset="{shared("assets/oem-samples-mobile.webp")}" width="900" height="546"><img class="hero-image" src="{shared("assets/oem-samples-hero.webp")}" width="2060" height="763" alt="{t("成卷巾材、翻盖湿巾和单片袋装的包装形式示意")}" fetchpriority="high"></picture>
     <div class="wrap hero-inner"><div class="hero-copy"><div class="hero-kicker">{icon("factory")} {t("四川成都 · 卫生用品制造")}</div>
     <h1>{t("湿巾与棉柔巾")}<br><em>{"for your brand" if LANG == "en" else "OEM 代工"}</em></h1>
     <p>{t("为品牌、零售渠道与餐饮客户定制生产。")}<br class="desktop-only"> {t("从单片独立装到家庭多片装，按使用场景匹配材质与包装。")}</p>
