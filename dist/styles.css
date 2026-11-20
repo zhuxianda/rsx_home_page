@@ -213,7 +213,6 @@ figcaption { margin-top: 9px; color: var(--muted); font-size: .87rem; }
 .download-card > .icon { width: 29px; height: 29px; color: var(--green); margin-bottom: 10px; }
 .download-card p { margin: 7px 0 15px; }
 .download-card small { font-weight: 400; color: #5b7467; }
-@media (min-width: 1800px) { .hero-image { object-position: center 60%; } }
 @media (max-width: 960px) {
   .wrap { width: calc(100% - 64px); }
   .header-inner { gap: 12px; height: 70px; }
@@ -357,6 +356,24 @@ figcaption { margin-top: 9px; color: var(--muted); font-size: .87rem; }
 .oem-home-hero h1 { font-size: clamp(3.4rem,4.9vw,5rem); }
 .oem-home-hero h1 em { font-family: "Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif; }
 .oem-home-hero .hero-copy p { max-width: 435px; }
+@media (min-width: 1400px) {
+  .oem-home-hero { background: linear-gradient(105deg, #e8f0e6, #dae5da); }
+  .oem-home-hero picture {
+    display: flex;
+    justify-content: center;
+    padding-inline-start: clamp(0px, 100vw - 1500px, 128px);
+  }
+  .oem-home-hero .hero-image {
+    /* Scale the scene to the banner height. Only the backdrop grows on ultrawide screens. */
+    flex: none;
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+    --edge-blend: clamp(0px, (100vw - 100%) / 2, 96px);
+    mask-image: linear-gradient(to right, transparent, black var(--edge-blend), black calc(100% - var(--edge-blend)), transparent);
+  }
+  .oem-home-hero .hero-copy p { max-width: 32rem; }
+}
 .partner-section { border-bottom: 1px solid var(--line); padding: 28px 0 24px; }
 .partner-heading { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
 .partner-heading h2 { font-size: 1.18rem; letter-spacing: .015em; }
