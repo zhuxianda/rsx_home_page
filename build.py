@@ -2,7 +2,7 @@
 from pathlib import Path
 from urllib.parse import urlencode
 from html import escape
-from catalogue import PRODUCTS
+from catalogue import OWN_BRANDS, PRODUCTS
 
 ROOT = Path(__file__).resolve().parent / "dist"
 COMPANY = "四川省如是欣生物科技有限公司"
@@ -57,6 +57,13 @@ FAMILIES = {
     "dry": ("棉柔巾系列", "Cotton soft wipes", "洗脸柔巾、抽取式与卷装棉柔巾。", "dry-facial"),
     "paper": ("生活用纸系列", "Tissue paper", "家庭用纸与商业空间纸品。", "kitchen-roll"),
     "care": ("清洁护理系列", "Home & personal care", "家居清洁与个人护理用品。", "p47-1"),
+}
+CATALOGUE_PAGES = {
+    "全部产品": "products.html",
+    **{name: f"products-{slug}.html" for name, slug in OWN_BRANDS.items()},
+    "代工 OEM": "products-oem.html",
+    "定制": "products-custom.html",
+    "商用纸品": "products-commercial.html",
 }
 NAV = [("首页", "index.html"), ("OEM 代工", "oem.html"), ("产品中心", "products.html"), ("制造实力", "manufacturing.html"), ("关于如是欣", "about.html")]
 
@@ -206,63 +213,63 @@ def oem():
 
 def product_card(p):
     title = escape(p.name)
-    fields = [p.brand, p.name, p.item, p.barcode, p.client, p.channel, p.contents, p.size]
-    if p.channel == "OEM 与定制":
-        key = p.client or p.brand
+    fields = [p.brand, p.name, p.item, p.barcode, p.client, p.catalogue_group, p.channel, p.contents, p.size]
+    key = p.client or p.brand
+    if p.business_type == "OEM 与定制" and key in PARTNERS:
         fields.extend((PARTNERS[key][1], partner_caption(key)))
     search_terms = " ".join(fields)
     subtitle = " · ".join(escape(value) for value in (p.size, p.contents) if value)
     item = f'<span class="item-code">{escape(p.item)}</span>' if p.item else ""
-    channel_label = " · OEM 定制" if p.channel == "OEM 与定制" else ""
+    channel_label = f" · {p.catalogue_group}" if p.business_type == "OEM 与定制" else ""
+    previous = f' data-previous-channel="{escape(p.previous_channel, quote=True)}"' if p.previous_channel else ""
     return f'''<a class="product-card" href="product-{p.slug}.html"
-    data-search="{escape(search_terms, quote=True)}" data-channel="{escape(p.channel, quote=True)}">
+    data-search="{escape(search_terms, quote=True)}" data-channel="{escape(p.business_type, quote=True)}"{previous}>
     <div class="product-art {p.family}">{photosrc(p.slug,p.branded_name()+"包装")}</div>
     <div class="product-meta"><div class="card-brand"><small>{escape(p.brand)}{channel_label}</small>{item}</div>
     <h3>{title}</h3><p>{subtitle}</p></div></a>'''
 
 
-def products(key=None):
-    family = FAMILIES[key][0] if key else '全部产品'
-    tabs = [(None, "全部产品")] + [(k, v[0]) for k, v in FAMILIES.items()]
-    def tab(k, n):
-        path = f"products-{k}.html" if k else "products.html"
-        attr = ' aria-current="page"' if k == key else ''
-        return f'<a href="{path}"{attr}>{n}</a>'
-    links = ''.join(tab(k, n) for k, n in tabs)
-    subset = sorted((p for p in PRODUCTS if not key or p.family == key), key=lambda p: p.channel != "OEM 与定制")
-    channels = sorted({p.channel for p in PRODUCTS}, key=("自有品牌", "其他品牌", "OEM 与定制", "商用纸品").index)
+def products(title, filename, items):
+    def tab(name, path):
+        attr = ' aria-current="page"' if path == filename else ''
+        return f'<a href="{path}"{attr}>{name}</a>'
+    links = ''.join(tab(name, path) for name, path in CATALOGUE_PAGES.items())
+    subset = sorted(items, key=lambda p: p.business_type != "OEM 与定制")
+    channels = ("自有品牌", "OEM 与定制", "商用纸品")
     options = ''.join(f'<option>{channel}</option>' for channel in channels)
     cards = ''.join(product_card(p) for p in subset)
-    html = f'''<div class="page-intro"><div class="wrap">{breadcrumbs(("产品中心",None))}{label("PRODUCT CATALOGUE")}
-    <h1>产品中心</h1><p>优先展示 OEM 代工与渠道定制产品。也可按系列查看自有品牌和商用纸品，核对包装、规格及图册原页。</p><a class="text-link catalogue-projects" href="oem.html#portfolio">{icon("book")} 查看合作品牌</a></div></div>
-    <section class="wrap catalogue"><div class="catalogue-tools"><nav class="filters" aria-label="产品系列">{links}</nav>
+    trail = breadcrumbs(("产品中心", None)) if title == "全部产品" else breadcrumbs(("产品中心", "products.html"), (title, None))
+    html = f'''<div class="page-intro"><div class="wrap">{trail}{label("PRODUCT CATALOGUE")}
+    <h1>产品中心</h1><p>查看自有品牌、代工 OEM、定制及商用纸品的包装与规格。</p><a class="text-link catalogue-projects" href="oem.html#portfolio">{icon("book")} 查看合作品牌</a></div></div>
+    <section class="wrap catalogue"><div class="catalogue-tools"><nav class="filters" aria-label="产品分类">{links}</nav>
     <a class="text-link" href="{DOC}" download>{icon("download")} 下载完整图册</a></div>
-    <h2 class="sr-only">{family}</h2>
-    <div class="catalogue-filter" hidden><label class="search-field"><span class="sr-only">在当前系列搜索产品</span>
+    <h2 class="sr-only">{title}</h2>
+    <div class="catalogue-filter" hidden><label class="search-field"><span class="sr-only">在当前分类搜索产品</span>
     <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
     <input id="product-query" type="search" placeholder="搜索品牌、品名、货号或条码"></label>
     <select id="product-channel" aria-label="产品业务类型"><option value="">全部业务类型</option>{options}</select></div>
     <p class="result-count" role="status"><span id="visible-count">{len(subset)}</span> 个产品及包装规格</p>
     <div class="product-grid">{cards}</div><div class="empty-results" hidden><h3>没有匹配的产品</h3>
-    <p>可以换个关键词，或清除条件后浏览当前系列。</p><button class="text-link" type="button">清除筛选</button></div></section>'''
-    filename = f"products-{key}.html" if key else "products.html"
-    write(filename,"产品中心" if not key else family,f"{family}包装、规格及装箱信息。","products.html",html)
+    <p>可以换个关键词，或清除条件后浏览当前分类。</p><button class="text-link" type="button">清除筛选</button></div></section>'''
+    write(filename,"产品中心" if title == "全部产品" else title,f"{title}包装、规格及装箱信息。","products.html",html)
 
 
 def detail(p):
-    family = FAMILIES[p.family][0]
     partner_link = ""
-    if p.channel == "OEM 与定制":
-        anchor, _ = PARTNERS[p.client or p.brand]
+    key = p.client or p.brand
+    if p.business_type == "OEM 与定制" and key in PARTNERS:
+        anchor, _ = PARTNERS[key]
         partner_link = f'<a href="oem.html#{anchor}" class="text-link">查看合作品牌</a>'
-    rows = [('所属业务', p.channel), ('品牌 / 系列', p.brand), ('合作项目', p.client),
+    business = p.catalogue_group if p.business_type == "OEM 与定制" else p.business_type
+    rows = [('所属业务', business), ('品牌 / 系列', p.brand), ('合作项目', p.client),
             ('产品货号', p.item), ('尺寸 / 尺码', p.size), ('包装规格', p.contents),
             ('装箱规格', p.carton), ('材质', p.material), ('保质期', p.shelf_life),
             ('执行标准', p.standard), (p.barcode_label, p.barcode)]
     specs = ''.join(f'<div><dt>{key}</dt><dd>{escape(value)}</dd></div>' for key,value in rows if value)
     lead = f'<p class="lead">{escape(p.description)}</p>' if p.description else ''
     note = f'<p class="source-note">{escape(p.note)}</p>' if p.note else ''
-    html = f'''<div class="wrap">{breadcrumbs(("产品中心","products.html"),(family,"products-"+p.family+".html"),(escape(p.name),None))}
+    category = (p.catalogue_group, CATALOGUE_PAGES[p.catalogue_group])
+    html = f'''<div class="wrap">{breadcrumbs(("产品中心","products.html"),category,(escape(p.name),None))}
     <section class="detail-grid"><div class="detail-art {p.family}">{photosrc(p.slug,p.branded_name()+"包装",lazy=False)}</div>
     <div>{label(FAMILIES[p.family][1].upper())}<p class="product-brand">{escape(p.brand)}</p><h1>{escape(p.name)}</h1>{lead}
     <dl class="specs">{specs}</dl>{note}<div class="detail-references">{partner_link}<a class="source-page text-link" href="{profile_url(p.page)}">{icon("book")} 查看图册第 {p.page} 页</a></div>
@@ -347,9 +354,11 @@ def business():
 if __name__ == "__main__":
     home()
     oem()
-    products()
-    for key in FAMILIES:
-        products(key)
+    for title, filename in CATALOGUE_PAGES.items():
+        items = PRODUCTS if title == "全部产品" else [p for p in PRODUCTS if p.catalogue_group == title]
+        products(title, filename, items)
+    for key, family in FAMILIES.items():
+        products(family[0], f"products-{key}.html", [p for p in PRODUCTS if p.family == key])
     for product in PRODUCTS:
         detail(product)
     profile_pages()

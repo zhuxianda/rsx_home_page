@@ -39,16 +39,20 @@ if (filterBar) {
   const channel = document.getElementById("product-channel");
   const count = document.getElementById("visible-count");
   const empty = document.querySelector(".empty-results");
-  const familyLinks = document.querySelectorAll(".catalogue-tools .filters a");
+  const categoryLinks = document.querySelectorAll(".catalogue-tools .filters a");
   const url = new URL(window.location.href);
   const normalize = (value) => value.normalize("NFKC").toLowerCase().replace(/[\s·-]+/g, "");
   const cards = Array.from(document.querySelectorAll(".product-card"), (card) => ({
     node: card,
     terms: normalize(card.dataset.search),
     channel: card.dataset.channel,
+    previousChannel: card.dataset.previousChannel,
   }));
 
   query.value = url.searchParams.get("q") || "";
+  if (url.searchParams.get("channel") === "其他品牌") {
+    channel.add(new Option("其他品牌（已归入代工 OEM）", "其他品牌"));
+  }
   channel.value = url.searchParams.get("channel") || "";
   if (channel.selectedIndex < 0) channel.selectedIndex = 0;
 
@@ -65,14 +69,14 @@ if (filterBar) {
     const words = query.value.trim().split(/\s+/).map(normalize);
     let matched = 0;
     for (const card of cards) {
-      const matches = (!channel.value || channel.value === card.channel) &&
+      const matches = (!channel.value || channel.value === card.channel || channel.value === card.previousChannel) &&
         words.every((word) => card.terms.includes(word));
       card.node.hidden = !matches;
       if (matches) matched++;
     }
     count.textContent = String(matched);
     empty.hidden = matched !== 0;
-    for (const link of familyLinks) link.href = withFilters(link.href).href;
+    for (const link of categoryLinks) link.href = withFilters(link.href).href;
     if (updateUrl && /^https?:$/.test(location.protocol)) {
       history.replaceState(history.state, "", withFilters(location.href));
     }

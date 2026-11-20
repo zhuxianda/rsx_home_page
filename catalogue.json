@@ -295,7 +295,7 @@
   {
     "slug": "p26-3",
     "page": 26,
-    "channel": "其他品牌",
+    "channel": "代工 OEM",
     "brand": "本该如此",
     "name": "婴儿手口湿巾",
     "item": "LB-80",
@@ -303,7 +303,8 @@
     "contents": "80 片 / 包",
     "carton": "30 包 / 箱",
     "barcode": "6934365795216",
-    "family": "wet"
+    "family": "wet",
+    "previous_channel": "其他品牌"
   },
   {
     "slug": "p27-1",
@@ -961,7 +962,7 @@
   {
     "slug": "p53-1",
     "page": 53,
-    "channel": "其他品牌",
+    "channel": "代工 OEM",
     "brand": "玫迪森",
     "name": "婴儿手口湿巾",
     "item": "6381",
@@ -969,12 +970,13 @@
     "contents": "80 片 / 包",
     "carton": "18 包 / 箱",
     "barcode": "6934365796381",
-    "family": "wet"
+    "family": "wet",
+    "previous_channel": "其他品牌"
   },
   {
     "slug": "p53-2",
     "page": 53,
-    "channel": "其他品牌",
+    "channel": "代工 OEM",
     "brand": "结伴同行",
     "name": "婴儿手口湿巾",
     "item": "WB80",
@@ -982,12 +984,13 @@
     "contents": "80 片 / 包",
     "carton": "18 包 / 箱",
     "barcode": "6934365799238",
-    "family": "wet"
+    "family": "wet",
+    "previous_channel": "其他品牌"
   },
   {
     "slug": "p53-3",
     "page": 53,
-    "channel": "其他品牌",
+    "channel": "代工 OEM",
     "brand": "竹森林",
     "name": "亲肤婴儿手口湿巾",
     "item": "NB80",
@@ -995,12 +998,13 @@
     "contents": "80 片 / 包",
     "carton": "30 包 / 箱",
     "barcode": "6970329670625",
-    "family": "wet"
+    "family": "wet",
+    "previous_channel": "其他品牌"
   },
   {
     "slug": "p55-1",
     "page": 55,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "自由点",
     "name": "湿巾（赠品）",
     "size": "180 × 140 mm",
@@ -1012,7 +1016,7 @@
   {
     "slug": "p55-2",
     "page": 55,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "自由点",
     "name": "乳霜纸（赠品）",
     "size": "180 × 135 mm",
@@ -1024,7 +1028,7 @@
   {
     "slug": "p55-3",
     "page": 55,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "自由点",
     "name": "冰感小毛巾（赠品）",
     "size": "200 × 700 mm",
@@ -1036,7 +1040,7 @@
   {
     "slug": "p56-1",
     "page": 56,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "洁柔",
     "name": "水润柔肤湿巾（白色包装）",
     "size": "180 × 180 mm",
@@ -1048,7 +1052,7 @@
   {
     "slug": "p56-2",
     "page": 56,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "洁柔",
     "name": "水润柔肤湿巾（黑色包装）",
     "size": "180 × 180 mm",
@@ -1060,7 +1064,7 @@
   {
     "slug": "p57-1",
     "page": 57,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "维邦",
     "name": "洗脸柔巾",
     "item": "PN-36",
@@ -1073,7 +1077,7 @@
   {
     "slug": "p57-2",
     "page": 57,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "维邦",
     "name": "卷巾",
     "item": "PN-41",
@@ -1086,7 +1090,7 @@
   {
     "slug": "p57-3",
     "page": 57,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "优多邦",
     "name": "洗脸柔巾",
     "item": "V0X01",
@@ -1100,7 +1104,7 @@
   {
     "slug": "p58-1",
     "page": 58,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "维邦",
     "name": "卫生湿巾",
     "item": "SH001",
@@ -1113,7 +1117,7 @@
   {
     "slug": "p58-2",
     "page": 58,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "维邦",
     "name": "卫生湿巾",
     "item": "SJ003",
@@ -1126,7 +1130,7 @@
   {
     "slug": "p58-3",
     "page": 58,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "维邦",
     "name": "婴儿手口湿巾",
     "item": "SJ002",
@@ -1139,7 +1143,7 @@
   {
     "slug": "p59-1",
     "page": 59,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "维邦",
     "name": "厨房湿巾",
     "item": "QIS04",
@@ -1152,7 +1156,7 @@
   {
     "slug": "p60-1",
     "page": 60,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "厮磨工坊",
     "name": "湿厕纸",
     "item": "SC180",
@@ -1165,7 +1169,7 @@
   {
     "slug": "p60-2",
     "page": 60,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "厮磨工坊",
     "name": "纯水湿巾",
     "item": "W180",
@@ -1178,7 +1182,7 @@
   {
     "slug": "p60-3",
     "page": 60,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "厮磨工坊",
     "name": "厨房湿巾",
     "item": "KW1453",
@@ -1191,7 +1195,7 @@
   {
     "slug": "p61-1",
     "page": 61,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "厮磨工坊",
     "name": "洗脸柔巾",
     "size": "200 × 200 mm",
@@ -1203,7 +1207,7 @@
   {
     "slug": "p62-1",
     "page": 62,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "柔贝佳",
     "name": "洗脸柔巾",
     "item": "R-701",
@@ -1216,7 +1220,7 @@
   {
     "slug": "p62-2",
     "page": 62,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "柔贝佳",
     "name": "婴儿手口湿巾",
     "item": "R-705",
@@ -1229,7 +1233,7 @@
   {
     "slug": "p63-1",
     "page": 63,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "开心朵朵",
     "name": "婴儿手口湿巾",
     "item": "YESJ100P",
@@ -1243,7 +1247,7 @@
   {
     "slug": "p63-2",
     "page": 63,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "开心朵朵",
     "name": "洗脸柔巾",
     "item": "KXX60C200",
@@ -1257,7 +1261,7 @@
   {
     "slug": "p64-1",
     "page": 64,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "桔子姑娘",
     "name": "婴儿手口湿巾",
     "item": "JZGN-1918",
@@ -1270,7 +1274,7 @@
   {
     "slug": "p64-2",
     "page": 64,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "桔子姑娘",
     "name": "卫生湿巾",
     "item": "JZGN-1901",
@@ -1283,7 +1287,7 @@
   {
     "slug": "p65-1",
     "page": 65,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "欧露",
     "name": "湿厕纸",
     "item": "O LA965",
@@ -1297,7 +1301,7 @@
   {
     "slug": "p66-1",
     "page": 66,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "柔康莱",
     "name": "厨房湿巾",
     "item": "RKL-0066",
@@ -1311,7 +1315,7 @@
   {
     "slug": "p66-2",
     "page": 66,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "柔康莱",
     "name": "卫生湿巾",
     "item": "RKL-0077",
@@ -1325,7 +1329,7 @@
   {
     "slug": "p66-3",
     "page": 66,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "柔康莱",
     "name": "卫生湿巾",
     "item": "RKL-0008",
@@ -1339,7 +1343,7 @@
   {
     "slug": "p67-1",
     "page": 67,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "谜库",
     "name": "洗脸柔巾",
     "item": "5188",
@@ -1353,7 +1357,7 @@
   {
     "slug": "p67-2",
     "page": 67,
-    "channel": "OEM 与定制",
+    "channel": "代工 OEM",
     "brand": "谜库",
     "name": "厨房湿巾",
     "item": "5102",
@@ -1367,7 +1371,7 @@
   {
     "slug": "p68-1",
     "page": 68,
-    "channel": "OEM 与定制",
+    "channel": "定制",
     "brand": "卿易舒",
     "name": "湿厕纸",
     "item": "QYS-0182",
@@ -1382,7 +1386,7 @@
   {
     "slug": "p68-2",
     "page": 68,
-    "channel": "OEM 与定制",
+    "channel": "定制",
     "brand": "卿易舒",
     "name": "湿厕纸（6 包装）",
     "item": "QYS-0113",
@@ -1396,7 +1400,7 @@
   {
     "slug": "p68-3",
     "page": 68,
-    "channel": "OEM 与定制",
+    "channel": "定制",
     "brand": "卿易舒",
     "name": "湿厕纸",
     "item": "QYS-0137",
@@ -1410,7 +1414,7 @@
   {
     "slug": "p69-1",
     "page": 69,
-    "channel": "OEM 与定制",
+    "channel": "定制",
     "brand": "卿易舒",
     "name": "抽取式面巾纸",
     "item": "QYS-0007",
@@ -1424,7 +1428,7 @@
   {
     "slug": "p69-2",
     "page": 69,
-    "channel": "OEM 与定制",
+    "channel": "定制",
     "brand": "卿易舒",
     "name": "卷纸",
     "item": "QYS-0182",
@@ -1438,7 +1442,7 @@
   {
     "slug": "p70-1",
     "page": 70,
-    "channel": "OEM 与定制",
+    "channel": "定制",
     "brand": "卿易舒",
     "name": "洗脸柔巾",
     "item": "QYS-0168",
@@ -1452,7 +1456,7 @@
   {
     "slug": "p70-2",
     "page": 70,
-    "channel": "OEM 与定制",
+    "channel": "定制",
     "brand": "卿易舒",
     "name": "保湿柔纸巾",
     "item": "QYS-0182",
@@ -1466,7 +1470,7 @@
   {
     "slug": "p71-1",
     "page": 71,
-    "channel": "OEM 与定制",
+    "channel": "定制",
     "brand": "汇鑫源·休闲庄",
     "name": "定制湿毛巾",
     "size": "250 × 250 mm",
@@ -1478,7 +1482,7 @@
   {
     "slug": "p71-2",
     "page": 71,
-    "channel": "OEM 与定制",
+    "channel": "定制",
     "brand": "食锦荟",
     "name": "定制湿毛巾",
     "size": "250 × 250 mm",
