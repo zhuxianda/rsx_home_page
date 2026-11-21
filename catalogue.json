@@ -1384,34 +1384,6 @@
     "note": "图册将此货号用于湿厕纸、卷纸及保湿柔纸巾三款产品。订货时请同时核对品名和规格。"
   },
   {
-    "slug": "p68-2",
-    "page": 68,
-    "channel": "定制",
-    "brand": "卿易舒",
-    "name": "湿厕纸（6 包装）",
-    "item": "QYS-0113",
-    "size": "180 × 150 mm",
-    "contents": "8 片 / 包，6 包 / 组",
-    "carton": "36 包 / 箱",
-    "material": "100% 原生木浆，75 g",
-    "family": "wet",
-    "client": "万华大药房"
-  },
-  {
-    "slug": "p68-3",
-    "page": 68,
-    "channel": "定制",
-    "brand": "卿易舒",
-    "name": "湿厕纸",
-    "item": "QYS-0137",
-    "size": "200 × 150 mm",
-    "contents": "8 片 / 包",
-    "carton": "216 包 / 箱",
-    "material": "100% 原生木浆，75 g",
-    "family": "wet",
-    "client": "万华大药房"
-  },
-  {
     "slug": "p69-1",
     "page": 69,
     "channel": "定制",
