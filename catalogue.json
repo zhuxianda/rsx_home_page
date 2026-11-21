@@ -293,20 +293,6 @@
     "family": "wet"
   },
   {
-    "slug": "p26-3",
-    "page": 26,
-    "channel": "代工 OEM",
-    "brand": "本该如此",
-    "name": "婴儿手口湿巾",
-    "item": "LB-80",
-    "size": "180 × 130 mm",
-    "contents": "80 片 / 包",
-    "carton": "30 包 / 箱",
-    "barcode": "6934365795216",
-    "family": "wet",
-    "previous_channel": "其他品牌"
-  },
-  {
     "slug": "p27-1",
     "page": 27,
     "channel": "自有品牌",
@@ -958,48 +944,6 @@
     "carton": "50 包 / 箱",
     "barcode": "6934365795988",
     "family": "dry"
-  },
-  {
-    "slug": "p53-1",
-    "page": 53,
-    "channel": "代工 OEM",
-    "brand": "玫迪森",
-    "name": "婴儿手口湿巾",
-    "item": "6381",
-    "size": "160 × 200 mm",
-    "contents": "80 片 / 包",
-    "carton": "18 包 / 箱",
-    "barcode": "6934365796381",
-    "family": "wet",
-    "previous_channel": "其他品牌"
-  },
-  {
-    "slug": "p53-2",
-    "page": 53,
-    "channel": "代工 OEM",
-    "brand": "结伴同行",
-    "name": "婴儿手口湿巾",
-    "item": "WB80",
-    "size": "200 × 160 mm",
-    "contents": "80 片 / 包",
-    "carton": "18 包 / 箱",
-    "barcode": "6934365799238",
-    "family": "wet",
-    "previous_channel": "其他品牌"
-  },
-  {
-    "slug": "p53-3",
-    "page": 53,
-    "channel": "代工 OEM",
-    "brand": "竹森林",
-    "name": "亲肤婴儿手口湿巾",
-    "item": "NB80",
-    "size": "180 × 140 mm",
-    "contents": "80 片 / 包",
-    "carton": "30 包 / 箱",
-    "barcode": "6970329670625",
-    "family": "wet",
-    "previous_channel": "其他品牌"
   },
   {
     "slug": "p55-1",
